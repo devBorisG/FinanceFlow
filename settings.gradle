@@ -1,0 +1,6 @@
+rootProject.name = 'FinanceFlow'
+
+include 'FinanceFlowUtils'
+include 'FinanceFlowInfrastructure'
+include 'FinanceFlowApplication'
+include 'FinanceFlowDomain'
