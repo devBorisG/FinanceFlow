@@ -1,4 +1,4 @@
-package finance.corp.financeflowinfrastructure.controller;
+package finance.corp.financeflowinfrastructure.adapter.primary.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
