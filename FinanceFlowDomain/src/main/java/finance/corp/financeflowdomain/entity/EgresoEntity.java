@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.UUID;
 @Data
 @Entity
-@Table(name = "Egreso", schema = "public")
+@Table(name = "\"Egreso\"", schema = "public")
 public class EgresoEntity {
     @Id
     UUID id;
