@@ -1,5 +1,5 @@
 package finance.corp.financeflowapplication.service.port;
 
 public interface UseCaseFacade<T> {
-    void execute(T object);
+    void execute(T dto);
 }
