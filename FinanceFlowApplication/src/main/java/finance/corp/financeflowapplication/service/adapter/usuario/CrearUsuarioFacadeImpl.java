@@ -30,12 +30,15 @@ public class CrearUsuarioFacadeImpl implements CrearUsuarioFacade {
             validator.isValid(dto);
             UsuarioDomain usuarioDomain = mapperDTOToDomain.mapToDomain(dto, UsuarioDomain.class);
             useCase.execute(usuarioDomain);
-        } catch (DomainCustomException | AplicationCustomException e) {
+        } catch (AplicationCustomException e) {
             throw e;
-        } catch (TransactionException e){
-            throw DomainCustomException.createTechnicalException(e,"Ocurrio un error en la transaccion.");
+        }   catch (DomainCustomException e){
+            throw AplicationCustomException.createTechnicalException(e, e.getMessage());
+        }
+        catch (TransactionException e){
+            throw AplicationCustomException.createTechnicalException(e,"Ocurrio un error en la transaccion.");
         } catch (Exception e){
-            throw DomainCustomException.createTechnicalException(e,"Ocurrio un error inesperado ejecutando la transaccion.");
+            throw AplicationCustomException.createTechnicalException(e,"Ocurrio un error inesperado ejecutando la transaccion.");
         }
     }
 }

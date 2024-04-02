@@ -35,7 +35,7 @@ public class CrearUsuarioValidatorImpl implements CrearUsuarioValidator {
         if (isEmailValid(dto.getCorreo())){
             throw AplicationCustomException.createUserException("El correo ingresado no es valido");
         }
-        if (usuarioRepository.findByCorreo(dto.getCorreo()) == null){
+        if (usuarioRepository.findByCorreo(dto.getCorreo()) != null){
             throw AplicationCustomException.createUserException("El correo ya esta registrado en la aplicacion");
         }
         if (isOnlyLettersAndSpaces(dto.getNombre()+dto.getApellido())){
