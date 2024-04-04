@@ -1,35 +1,24 @@
 package finance.corp.financeflowinfrastructure.adapter.primary.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import finance.corp.financeflowinfrastructure.adapter.secondary.MailgunService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@RequestMapping("/finance-flow/v1/usuario")
 public class RestDummy {
 
-    @RequestMapping ("/dummyResponse")
-    public String dummyResponse() {
-        return "This is a dummy response!";
+    private final MailgunService mailgunService;
+
+    public RestDummy(MailgunService mailgunService) {
+        this.mailgunService = mailgunService;
     }
 
-    @GetMapping("/hello")
-    public String hello() {
-        System.out.println("Hello World!");
-        return "Hello World!";
-    }
-
-    @RequestMapping ("/bye")
-    public String bye() {
-        System.out.println("Bye!");
-        return "Goodbye!";
-    }
-
-    @RequestMapping ("/")
-    public String root() {
-        return "Root!";
-    }
-
-    @RequestMapping ("/test")
-    public String test() {
-        return "Test!";
+    @PostMapping("/recuperar-cuenta")
+    public ResponseEntity<String> dummyResponse() {
+        mailgunService.sendMail("david.andres.2801@gmail.com");
+        return ResponseEntity.ok("Dummy response");
     }
 }

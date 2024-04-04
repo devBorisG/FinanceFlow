@@ -33,7 +33,14 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation group: 'com.mailgun', name: 'mailgun-java', version: '1.0.8'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//Dependecias de mailgun
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'javax.ws.rs:javax.ws.rs-api:2.1.1'
+	implementation 'net.sargue:mailgun:1.8.0'
+	implementation 'org.glassfish.jersey.core:jersey-common:2.34'
 	//Dependencias de capas
 	implementation project(':FinanceFlowUtils')
 	implementation project(':FinanceFlowDomain')
