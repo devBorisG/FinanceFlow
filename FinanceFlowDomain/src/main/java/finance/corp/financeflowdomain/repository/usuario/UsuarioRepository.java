@@ -1,4 +1,4 @@
-package finance.corp.financeflowdomain.repository.usuario.port;
+package finance.corp.financeflowdomain.repository.usuario;
 
 import finance.corp.financeflowdomain.entity.UsuarioEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

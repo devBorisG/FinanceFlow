@@ -1,4 +1,4 @@
-package finance.corp.financeflowdomain.repository.categoria.port;
+package finance.corp.financeflowdomain.repository.categoria;
 
 import finance.corp.financeflowdomain.entity.CategoriaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

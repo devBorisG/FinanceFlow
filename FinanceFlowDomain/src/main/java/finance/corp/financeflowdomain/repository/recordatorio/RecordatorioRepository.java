@@ -1,4 +1,4 @@
-package finance.corp.financeflowdomain.repository.recordatorio.port;
+package finance.corp.financeflowdomain.repository.recordatorio;
 
 import finance.corp.financeflowdomain.entity.RecordatorioEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

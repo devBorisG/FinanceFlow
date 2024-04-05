@@ -1,15 +1,11 @@
 package finance.corp.financeflowinfrastructure.adapter.secondary;
 
-import finance.corp.financeflowinfrastructure.port.MailService;
+import finance.corp.financeflowdomain.port.output.email.SendEmail;
 import finance.corp.financeflowutils.exception.infraestructure.InfraestructureCustomException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-import net.sargue.mailgun.Configuration;
-import net.sargue.mailgun.Mail;
-import net.sargue.mailgun.MailBuilder;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -19,7 +15,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @Service
-public class MailgunService implements MailService {
+public class MailgunService implements SendEmail {
 
     private final JavaMailSender emailSender;
 
@@ -28,7 +24,7 @@ public class MailgunService implements MailService {
     }
 
     @Override
-    public void sendMail(String to) {
+    public void sendEmail(String to) {
         String htmlContent = loadEmailTemplate();
         try{
             MimeMessage message = emailSender.createMimeMessage();
@@ -47,7 +43,8 @@ public class MailgunService implements MailService {
         }
     }
 
-    private String loadEmailTemplate() {
+    @Override
+    public String loadEmailTemplate() {
         try {
             ClassPathResource resource = new ClassPathResource("./html/email-template.html");
             byte[] data = StreamUtils.copyToByteArray(resource.getInputStream());

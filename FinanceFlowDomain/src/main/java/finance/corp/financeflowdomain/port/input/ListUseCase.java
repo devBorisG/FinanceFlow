@@ -1,4 +1,4 @@
-package finance.corp.financeflowdomain.usecase;
+package finance.corp.financeflowdomain.port.input;
 
 import java.util.List;
 

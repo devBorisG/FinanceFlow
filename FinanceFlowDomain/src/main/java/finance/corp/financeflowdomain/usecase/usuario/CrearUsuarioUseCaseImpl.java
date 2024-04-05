@@ -1,9 +1,9 @@
-package finance.corp.financeflowdomain.usecase.adapter.usuario;
+package finance.corp.financeflowdomain.usecase.usuario;
 
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
 import finance.corp.financeflowdomain.entity.UsuarioEntity;
-import finance.corp.financeflowdomain.repository.usuario.port.UsuarioRepository;
-import finance.corp.financeflowdomain.usecase.port.usuario.CrearUsuarioUseCase;
+import finance.corp.financeflowdomain.repository.usuario.UsuarioRepository;
+import finance.corp.financeflowdomain.port.input.usuario.CrearUsuarioUseCase;
 import finance.corp.financeflowutils.exception.domain.DomainCustomException;
 import finance.corp.financeflowutils.mapper.MapperDomainToEntity;
 import jakarta.persistence.TransactionRequiredException;

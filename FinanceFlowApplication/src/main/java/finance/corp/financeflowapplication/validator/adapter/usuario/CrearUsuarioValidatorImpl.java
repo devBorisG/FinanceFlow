@@ -2,7 +2,7 @@ package finance.corp.financeflowapplication.validator.adapter.usuario;
 
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
 import finance.corp.financeflowapplication.validator.port.usuario.CrearUsuarioValidator;
-import finance.corp.financeflowdomain.repository.usuario.port.UsuarioRepository;
+import finance.corp.financeflowdomain.repository.usuario.UsuarioRepository;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
 import org.springframework.stereotype.Component;
 import static finance.corp.financeflowutils.helper.UUIDHelper.isDefaultUUID;

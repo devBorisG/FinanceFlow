@@ -1,4 +1,4 @@
-package finance.corp.financeflowdomain.repository.meta.port;
+package finance.corp.financeflowdomain.repository.meta;
 
 import finance.corp.financeflowdomain.entity.MetaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

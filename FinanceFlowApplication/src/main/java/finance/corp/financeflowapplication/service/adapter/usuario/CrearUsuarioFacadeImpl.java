@@ -4,7 +4,7 @@ import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
 import finance.corp.financeflowapplication.service.port.usuario.CrearUsuarioFacade;
 import finance.corp.financeflowapplication.validator.port.usuario.CrearUsuarioValidator;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
-import finance.corp.financeflowdomain.usecase.port.usuario.CrearUsuarioUseCase;
+import finance.corp.financeflowdomain.port.input.usuario.CrearUsuarioUseCase;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
 import finance.corp.financeflowutils.exception.domain.DomainCustomException;
 import org.springframework.stereotype.Service;
