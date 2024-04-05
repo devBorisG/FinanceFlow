@@ -1,7 +1,7 @@
 package finance.corp.financeflowinfrastructure.adapter.primary.controller.usuario;
 
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
-import finance.corp.financeflowapplication.service.port.usuario.CrearUsuarioFacade;
+import finance.corp.financeflowapplication.service.usuario.CrearUsuarioFacade;
 import finance.corp.financeflowinfrastructure.adapter.primary.response.Response;
 import finance.corp.financeflowutils.exception.FinanceFlowCustomException;
 import org.springframework.http.HttpStatus;

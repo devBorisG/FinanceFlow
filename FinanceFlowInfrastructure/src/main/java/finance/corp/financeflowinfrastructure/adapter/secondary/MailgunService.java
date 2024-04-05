@@ -8,13 +8,13 @@ import jakarta.mail.internet.MimeMessage;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@Service
+@Component
 public class MailgunService implements SendEmail {
 
     private final JavaMailSender emailSender;
@@ -43,8 +43,8 @@ public class MailgunService implements SendEmail {
         }
     }
 
-    @Override
-    public String loadEmailTemplate() {
+
+    private String loadEmailTemplate() {
         try {
             ClassPathResource resource = new ClassPathResource("./html/email-template.html");
             byte[] data = StreamUtils.copyToByteArray(resource.getInputStream());
