@@ -3,6 +3,7 @@ package finance.corp.financeflowapplication.dto.meta.builder;
 import finance.corp.financeflowapplication.dto.meta.MetaDTO;
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -16,8 +17,8 @@ public class MetaDTOBuilder implements MetaBuilder{
     private String nombre;
     private String descripcion;
     private double monto;
-    private Date fechaInicio;
-    private Date fechaFin;
+    private LocalDateTime fechaInicio;
+    private LocalDateTime fechaFin;
     private UsuarioDTO usuario;
 
     /**
@@ -91,7 +92,7 @@ public class MetaDTOBuilder implements MetaBuilder{
      * @return the current MetaDTOBuilder
      */
     @Override
-    public MetaDTOBuilder setFechaInicio(Date fechaInicio) {
+    public MetaDTOBuilder setFechaInicio(LocalDateTime fechaInicio) {
         this.fechaInicio = fechaInicio;
         return this;
     }
@@ -103,7 +104,7 @@ public class MetaDTOBuilder implements MetaBuilder{
      * @return the current MetaDTOBuilder
      */
     @Override
-    public MetaDTOBuilder setFechaFin(Date fechaFin) {
+    public MetaDTOBuilder setFechaFin(LocalDateTime fechaFin) {
         this.fechaFin = fechaFin;
         return this;
     }

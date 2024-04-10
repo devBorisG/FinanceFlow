@@ -1,47 +1,37 @@
 package finance.corp.financeflowinfrastructure.adapter.primary.controller.usuario;
 
 import finance.corp.financeflowapplication.dto.token.TokenDTO;
-import finance.corp.financeflowapplication.dto.token.builder.TokenBuilder;
 import finance.corp.financeflowapplication.dto.token.builder.TokenDTOBuilder;
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
-import finance.corp.financeflowapplication.dto.usuario.builder.UsuarioDTOBuilder;
-import finance.corp.financeflowapplication.service.usuario.EnviarCorreoRecuperacionFacade;
+import finance.corp.financeflowapplication.service.usuario.CambioContrasenaFacade;
 import finance.corp.financeflowinfrastructure.adapter.primary.response.Response;
 import finance.corp.financeflowutils.exception.FinanceFlowCustomException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import static finance.corp.financeflowutils.helper.UUIDHelper.getNewUUID;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/finance-flow/v1/usuario/recuperar-cuenta")
-public class RecuperarUsuarioController {
+public class CambioContrasenaController {
+    private final CambioContrasenaFacade facade;
 
-    private final EnviarCorreoRecuperacionFacade facade;
-
-    public RecuperarUsuarioController(EnviarCorreoRecuperacionFacade enviarCorreoFacade) {
-        this.facade = enviarCorreoFacade;
+    public CambioContrasenaController(CambioContrasenaFacade facade) {
+        this.facade = facade;
     }
 
-    @PostMapping()
-    public ResponseEntity<Response<String>> execute(@RequestParam String correo){
+    @PostMapping("/cambio-contrasena")
+    public ResponseEntity<Response<String>> execute(@RequestParam UUID token, @RequestBody UsuarioDTO usuarioDTO){
         TokenDTO tokenDTO = TokenDTOBuilder
                 .getTokenDTOBuilder()
-                .setToken(getNewUUID())
-                .setUsuarioDTO(UsuarioDTOBuilder
-                        .getUsuarioDTOBuilder()
-                        .setCorreo(correo)
-                        .build())
+                .setToken(token)
                 .build();
         final Response<String> response = new Response<>();
         HttpStatus status = HttpStatus.OK;
         try{
-            facade.execute(tokenDTO);
-            response.addSuccessMessage("Se ha enviado el correo de recuperacion, revisa tu bandeja de entrada");
+//            facade.execute(tokenDTO, usuarioDTO);
+            response.addSuccessMessage("Token valido");
         }catch (final FinanceFlowCustomException e){
             status = HttpStatus.BAD_REQUEST;
             if (e.isTechnicalException()){

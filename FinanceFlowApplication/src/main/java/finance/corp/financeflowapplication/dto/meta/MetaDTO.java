@@ -13,6 +13,7 @@ import static finance.corp.financeflowutils.helper.StringHelper.applyTrim;
 import static finance.corp.financeflowutils.helper.NumberHelper.getDefaultDouble;
 import static finance.corp.financeflowutils.helper.DateHelper.getDefaultDate;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -25,8 +26,8 @@ public class MetaDTO {
     private UUID id;
     private String nombre;
     private String descripcion;
-    private Date fechaInicio;
-    private Date fechaFin;
+    private LocalDateTime fechaInicio;
+    private LocalDateTime fechaFin;
     private double monto;
     private UsuarioDTO usuario;
 
@@ -56,7 +57,7 @@ public class MetaDTO {
      * @param monto the amount of the meta
      * @param usuario the user associated with the meta
      */
-    public MetaDTO(final UUID id, final String nombre,final String descripcion,final Date fechaInicio,final Date fechaFin,final double monto,final UsuarioDTO usuario) {
+    public MetaDTO(final UUID id, final String nombre,final String descripcion,final LocalDateTime fechaInicio,final LocalDateTime fechaFin,final double monto,final UsuarioDTO usuario) {
         setId(id);
         setNombre(nombre);
         setDescripcion(descripcion);
@@ -78,7 +79,7 @@ public class MetaDTO {
      * @param usuario the user associated with the meta
      * @return a new MetaDTO with the provided values
      */
-    public static MetaDTO create(final UUID id, final String nombre,final String descripcion,final Date fechaInicio,final Date fechaFin,final double monto,final UsuarioDTO usuario) {
+    public static MetaDTO create(final UUID id, final String nombre,final String descripcion,final LocalDateTime fechaInicio,final LocalDateTime fechaFin,final double monto,final UsuarioDTO usuario) {
         return new MetaDTO(id,nombre,descripcion,fechaInicio,fechaFin,monto,usuario);
     }
 
@@ -150,7 +151,7 @@ public class MetaDTO {
      *
      * @return the start date of the meta
      */
-    public Date getFechaInicio() {
+    public LocalDateTime getFechaInicio() {
         return fechaInicio;
     }
 
@@ -159,7 +160,7 @@ public class MetaDTO {
      *
      * @param fechaInicio the start date of the meta
      */
-    public void setFechaInicio(final Date fechaInicio) {
+    public void setFechaInicio(final LocalDateTime fechaInicio) {
         this.fechaInicio = getDefaultDate(fechaInicio);
     }
 
@@ -168,7 +169,7 @@ public class MetaDTO {
      *
      * @return the end date of the meta
      */
-    public Date getFechaFin() {
+    public LocalDateTime getFechaFin() {
         return fechaFin;
     }
 
@@ -177,7 +178,7 @@ public class MetaDTO {
      *
      * @param fechaFin the end date of the meta
      */
-    public void setFechaFin(final Date fechaFin) {
+    public void setFechaFin(final LocalDateTime fechaFin) {
         this.fechaFin = getDefaultDate(fechaFin);
     }
 

@@ -2,6 +2,7 @@ package finance.corp.financeflowapplication.dto.meta.builder;
 
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -50,7 +51,7 @@ public interface MetaBuilder {
      * @param fechaInicio the Date to set as the fechaInicio
      * @return the current MetaDTOBuilder
      */
-    MetaDTOBuilder setFechaInicio(Date fechaInicio);
+    MetaDTOBuilder setFechaInicio(LocalDateTime fechaInicio);
 
     /**
      * Sets the fechaFin of the MetaDTO.
@@ -58,7 +59,7 @@ public interface MetaBuilder {
      * @param fechaFin the Date to set as the fechaFin
      * @return the current MetaDTOBuilder
      */
-    MetaDTOBuilder setFechaFin(Date fechaFin);
+    MetaDTOBuilder setFechaFin(LocalDateTime fechaFin);
 
     /**
      * Sets the usuario of the MetaDTO.

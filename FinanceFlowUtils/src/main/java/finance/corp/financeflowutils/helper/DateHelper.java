@@ -1,5 +1,6 @@
 package finance.corp.financeflowutils.helper;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import static finance.corp.financeflowutils.constant.Constants.DEFAULT_DATE;
@@ -11,15 +12,15 @@ public class DateHelper {
             super();
         }
 
-        public static Date getDefaultDate(final Date date) {
+        public static LocalDateTime getDefaultDate(final LocalDateTime date) {
             return getDefaultIfNull(date, DEFAULT_DATE);
         }
 
-        public static Date getNewDate() {
-            return new Date();
+        public static LocalDateTime getNewDate() {
+            return LocalDateTime.now();
         }
 
-        public static boolean isDefaultDate(final Date date) {
+        public static boolean isDefaultDate(final LocalDateTime date) {
             return DEFAULT_DATE.equals(date);
         }
 }

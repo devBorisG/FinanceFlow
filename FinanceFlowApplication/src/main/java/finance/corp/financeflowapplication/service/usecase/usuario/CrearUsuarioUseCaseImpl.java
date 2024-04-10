@@ -1,4 +1,4 @@
-package finance.corp.financeflowdomain.usecase.usuario;
+package finance.corp.financeflowapplication.service.usecase.usuario;
 
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
 import finance.corp.financeflowdomain.entity.UsuarioEntity;
