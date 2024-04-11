@@ -1,8 +1,7 @@
 package finance.corp.financeflowapplication.service.usuario;
 
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
-import finance.corp.financeflowapplication.service.FindUseCaseFacade;
-import finance.corp.financeflowdomain.domain.UsuarioDomain;
+import finance.corp.financeflowapplication.service.ListUseCaseFacade;
 
-public interface ConsultarUsuarioFacade extends FindUseCaseFacade<UsuarioDTO, UsuarioDomain> {
+public interface ConsultarUsuarioFacade extends ListUseCaseFacade<UsuarioDTO>{
 }

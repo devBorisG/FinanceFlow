@@ -1,6 +1,8 @@
 package finance.corp.financeflowinfrastructure.adapter.primary.response;
 
+import finance.corp.financeflowutils.constant.Constants;
 import finance.corp.financeflowutils.exception.messages.Message;
+import finance.corp.financeflowutils.helper.ObjectHelper;
 import lombok.Getter;
 
 import static finance.corp.financeflowutils.helper.ObjectHelper.getDefaultIfNull;
@@ -12,16 +14,27 @@ import java.util.List;
 public class Response<T> {
     private List<Message> messages;
     private List<T> data;
+    private String token;
 
     public Response(){
         setMessages(new ArrayList<>());
         setData(new ArrayList<>());
+        setToken(token);
     }
 
     public Response(List<Message> messages, List<T> data){
         super();
         setMessages(messages);
         setData(data);
+        setToken(token);
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = ObjectHelper.getDefaultIfNull(token, Constants.EMPTY_STRING);
     }
 
     public void setMessages(List<Message> messages) {
