@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class EnviarCorreoRecuperacionFacadeImpl implements EnviarCorreoRecuperacionFacade {
 
     MapperDTOToDomain<TokenDTO, TokenDomain> mapperDTOToDomain = new MapperDTOToDomain<>();
+    MapperDTOToDomain<UsuarioDTO, UsuarioDomain> mapperDTOToDomainUsuario = new MapperDTOToDomain<>();
     private final EnviarCorreoRecuperacionUseCase useCase;
 
     public EnviarCorreoRecuperacionFacadeImpl(EnviarCorreoRecuperacionUseCase useCase) {
@@ -25,6 +26,7 @@ public class EnviarCorreoRecuperacionFacadeImpl implements EnviarCorreoRecuperac
     public void execute(TokenDTO dto) {
         try {
             TokenDomain tokenDomain = mapperDTOToDomain.mapToDomain(dto, TokenDomain.class);
+            tokenDomain.setUsuarioDomain(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuarioDTO(), UsuarioDomain.class));
             useCase.execute(tokenDomain);
         } catch (AplicationCustomException e) {
             throw e;

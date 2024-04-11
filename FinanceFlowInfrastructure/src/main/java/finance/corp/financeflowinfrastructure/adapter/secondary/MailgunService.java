@@ -24,8 +24,8 @@ public class MailgunService implements SendEmail {
     }
 
     @Override
-    public void sendEmail(String to) {
-        String htmlContent = loadEmailTemplate();
+    public void send(String to, String token) {
+        String htmlContent = loadEmailTemplate().replace("{token}",token);
         try{
             MimeMessage message = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");

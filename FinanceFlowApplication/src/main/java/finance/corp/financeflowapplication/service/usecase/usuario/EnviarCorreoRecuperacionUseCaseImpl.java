@@ -2,6 +2,7 @@ package finance.corp.financeflowapplication.service.usecase.usuario;
 
 import finance.corp.financeflowdomain.domain.TokenDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
+import finance.corp.financeflowdomain.entity.TokenEntity;
 import finance.corp.financeflowdomain.entity.UsuarioEntity;
 import finance.corp.financeflowdomain.port.input.usuario.EnviarCorreoRecuperacionUseCase;
 import finance.corp.financeflowdomain.port.output.email.SendEmail;
@@ -9,11 +10,14 @@ import finance.corp.financeflowdomain.repository.token.TokenRepository;
 import finance.corp.financeflowdomain.repository.usuario.UsuarioRepository;
 import finance.corp.financeflowutils.exception.domain.DomainCustomException;
 import finance.corp.financeflowutils.exception.infraestructure.InfraestructureCustomException;
+import finance.corp.financeflowutils.mapper.MapperDomainToEntity;
+import finance.corp.financeflowutils.mapper.MapperEntityToDomain;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EnviarCorreoRecuperacionUseCaseImpl implements EnviarCorreoRecuperacionUseCase {
-
+    MapperDomainToEntity<TokenDomain, TokenEntity> mapperDomainToEntity = new MapperDomainToEntity<>();
+    MapperDomainToEntity<UsuarioDomain,UsuarioEntity> mapperDomainToEntityUsuario = new MapperDomainToEntity<>();
     private final SendEmail sendEmail;
     private final TokenRepository tokenRepository;
     private final UsuarioRepository usuarioRepository;
@@ -26,14 +30,17 @@ public class EnviarCorreoRecuperacionUseCaseImpl implements EnviarCorreoRecupera
 
     @Override
     public void execute(TokenDomain domain) {
-        UsuarioEntity usuarioEntity;
+        TokenEntity tokenEntity = mapperDomainToEntity.mapToEntity(domain, TokenEntity.class);
+        tokenEntity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuarioDomain(), UsuarioEntity.class));
         try {
-            usuarioEntity = usuarioRepository.findByCorreo(domain
-                    .getUsuarioDomain()
-                    .getCorreo());
-//            domain.setUsuarioDomain();
-//            tokenRepository.save()
-//            sendEmail.sendEmail(domain.getCorreo());
+            UsuarioEntity usuarioEntity = usuarioRepository.findByCorreo(tokenEntity
+                    .getUsuario()
+                    .getCorreo()
+            );
+            tokenEntity.setUsuario(usuarioEntity);
+            tokenRepository.save(tokenEntity);
+            sendEmail.send(domain.getUsuarioDomain().getCorreo(), domain.getToken());
+            tokenRepository.delete(tokenEntity);
         }catch (InfraestructureCustomException e){
             throw DomainCustomException.createTechnicalException(e, e.getMessage());
         }
