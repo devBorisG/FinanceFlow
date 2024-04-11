@@ -14,6 +14,8 @@ import finance.corp.financeflowutils.mapper.MapperDomainToEntity;
 import finance.corp.financeflowutils.mapper.MapperEntityToDomain;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class EnviarCorreoRecuperacionUseCaseImpl implements EnviarCorreoRecuperacionUseCase {
     MapperDomainToEntity<TokenDomain, TokenEntity> mapperDomainToEntity = new MapperDomainToEntity<>();
@@ -33,14 +35,16 @@ public class EnviarCorreoRecuperacionUseCaseImpl implements EnviarCorreoRecupera
         TokenEntity tokenEntity = mapperDomainToEntity.mapToEntity(domain, TokenEntity.class);
         tokenEntity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuarioDomain(), UsuarioEntity.class));
         try {
-            UsuarioEntity usuarioEntity = usuarioRepository.findByCorreo(tokenEntity
+            Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findByCorreo(tokenEntity
                     .getUsuario()
                     .getCorreo()
             );
-            tokenEntity.setUsuario(usuarioEntity);
-            tokenRepository.save(tokenEntity);
-            sendEmail.send(domain.getUsuarioDomain().getCorreo(), domain.getToken());
-            tokenRepository.delete(tokenEntity);
+            if(usuarioEntity.isPresent()){
+                tokenEntity.setUsuario(usuarioEntity.get());
+                tokenRepository.save(tokenEntity);
+                sendEmail.send(domain.getUsuarioDomain().getCorreo(), domain.getToken());
+                tokenRepository.delete(tokenEntity);
+            }
         }catch (InfraestructureCustomException e){
             throw DomainCustomException.createTechnicalException(e, e.getMessage());
         }

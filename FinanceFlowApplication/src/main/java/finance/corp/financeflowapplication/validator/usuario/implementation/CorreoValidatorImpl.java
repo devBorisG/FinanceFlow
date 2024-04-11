@@ -26,7 +26,7 @@ public class CorreoValidatorImpl implements CorreoValidator {
         if (isPatternValid(correo)){
             throw AplicationCustomException.createUserException("El correo ingresado no es valido");
         }
-        if (usuarioRepository.findByCorreo(correo) != null){
+        if (usuarioRepository.findByCorreo(correo).isPresent()){
             throw AplicationCustomException.createUserException("El correo ya esta registrado en la aplicacion");
         }
     }
