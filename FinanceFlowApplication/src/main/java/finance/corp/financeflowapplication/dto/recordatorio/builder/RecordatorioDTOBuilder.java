@@ -3,6 +3,7 @@ package finance.corp.financeflowapplication.dto.recordatorio.builder;
 import finance.corp.financeflowapplication.dto.meta.MetaDTO;
 import finance.corp.financeflowapplication.dto.recordatorio.RecordatorioDTO;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -12,7 +13,7 @@ import java.util.UUID;
  */
 public class RecordatorioDTOBuilder implements RecordatorioBuilder{
     private UUID id;
-    private Date fecha;
+    private LocalDateTime fecha;
     private int periodicidad;
     private MetaDTO meta;
 
@@ -51,7 +52,7 @@ public class RecordatorioDTOBuilder implements RecordatorioBuilder{
      * @return The current instance of RecordatorioDTOBuilder.
      */
     @Override
-    public RecordatorioDTOBuilder setFecha(Date fecha) {
+    public RecordatorioDTOBuilder setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
         return this;
     }

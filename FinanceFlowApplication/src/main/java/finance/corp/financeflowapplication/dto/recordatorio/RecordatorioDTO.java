@@ -11,6 +11,7 @@ import static finance.corp.financeflowutils.helper.NumberHelper.getDefaultIntege
 import static finance.corp.financeflowutils.helper.ObjectHelper.getDefaultIfNull;
 import static finance.corp.financeflowutils.helper.UUIDHelper.getDefaultUUID;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -20,7 +21,7 @@ import java.util.UUID;
  */
 public class RecordatorioDTO {
     private UUID id;
-    private Date fecha;
+    private LocalDateTime fecha;
     private int periodicidad;
     private MetaDTO meta;
 
@@ -42,7 +43,7 @@ public class RecordatorioDTO {
      * @param periodicidad The periodicity of the Recordatorio.
      * @param meta The MetaDTO associated with the Recordatorio.
      */
-    public RecordatorioDTO(final UUID id,final Date fecha,final int periodicidad,final MetaDTO meta){
+    public RecordatorioDTO(final UUID id,final LocalDateTime fecha,final int periodicidad,final MetaDTO meta){
         setId(id);
         setFecha(fecha);
         setPeriodicidad(periodicidad);
@@ -58,7 +59,7 @@ public class RecordatorioDTO {
      * @param meta The MetaDTO associated with the Recordatorio.
      * @return A new instance of RecordatorioDTO.
      */
-    public static RecordatorioDTO create(final UUID id,final Date fecha,final int periodicidad,final MetaDTO meta){
+    public static RecordatorioDTO create(final UUID id,final LocalDateTime fecha,final int periodicidad,final MetaDTO meta){
         return new RecordatorioDTO(id,fecha,periodicidad,meta);
     }
 
@@ -94,7 +95,7 @@ public class RecordatorioDTO {
      *
      * @return The date of the Recordatorio.
      */
-    public Date getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
@@ -103,7 +104,7 @@ public class RecordatorioDTO {
      *
      * @param fecha The date to set.
      */
-    public void setFecha(final Date fecha) {
+    public void setFecha(final LocalDateTime fecha) {
         this.fecha = getDefaultDate(fecha);
     }
 
