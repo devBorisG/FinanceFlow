@@ -26,11 +26,12 @@ public class CambioContrasenaController {
         TokenDTO tokenDTO = TokenDTOBuilder
                 .getTokenDTOBuilder()
                 .setToken(token)
+                .setUsuarioDTO(usuarioDTO)
                 .build();
         final Response<String> response = new Response<>();
         HttpStatus status = HttpStatus.OK;
         try{
-//            facade.execute(tokenDTO, usuarioDTO);
+            facade.execute(tokenDTO);
             response.addSuccessMessage("Token valido");
         }catch (final FinanceFlowCustomException e){
             status = HttpStatus.BAD_REQUEST;
