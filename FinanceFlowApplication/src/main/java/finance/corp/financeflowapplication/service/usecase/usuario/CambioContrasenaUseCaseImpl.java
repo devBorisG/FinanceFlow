@@ -26,8 +26,6 @@ public class CambioContrasenaUseCaseImpl implements CambioContrasenaUseCase{
     @Override
     public void execute(TokenDomain domain) {
         try{
-            //TODO: Validar que la fecha de caducidad no se haya vencido
-            //TODO: Eliminar el token al finalizar la transaccion
             Optional<TokenEntity> tokenEntity = tokenRepository.findById(domain.getToken());
 
             if (tokenEntity.isPresent()){
@@ -37,6 +35,7 @@ public class CambioContrasenaUseCaseImpl implements CambioContrasenaUseCase{
                         )
                 );
                 tokenRepository.save(tokenEntity.get());
+                tokenRepository.delete(tokenEntity.get());
             }
         }catch (DataAccessException e){
             throw AplicationCustomException.createTechnicalException(e, "Error al intentar recuperar el id del token.");

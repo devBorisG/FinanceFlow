@@ -3,6 +3,8 @@ package finance.corp.financeflowapplication.service.usuario.implementation;
 import finance.corp.financeflowapplication.dto.token.TokenDTO;
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
 import finance.corp.financeflowapplication.service.usuario.CambioContrasenaFacade;
+import finance.corp.financeflowapplication.validator.usuario.CambioContrasenaValidator;
+import finance.corp.financeflowapplication.validator.usuario.ContrasenaValidator;
 import finance.corp.financeflowdomain.domain.TokenDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
 import finance.corp.financeflowdomain.port.input.usuario.CambioContrasenaUseCase;
@@ -18,15 +20,17 @@ public class CambioContrasenaFacadeImpl implements CambioContrasenaFacade {
     MapperDTOToDomain<TokenDTO, TokenDomain> mapperDTOToDomain = new MapperDTOToDomain<>();
     MapperDTOToDomain<UsuarioDTO, UsuarioDomain> usuarioMapperDToToDomain = new MapperDTOToDomain<>();
     private final CambioContrasenaUseCase useCase;
+    private final CambioContrasenaValidator validator;
 
-    public CambioContrasenaFacadeImpl(CambioContrasenaUseCase useCase) {
+    public CambioContrasenaFacadeImpl(CambioContrasenaUseCase useCase, CambioContrasenaValidator validator) {
         this.useCase = useCase;
+        this.validator = validator;
     }
 
     @Override
     public void execute(TokenDTO dto) {
         try {
-            //TODO: Hacer validator para contrasena que si cumpla
+            validator.isValid(dto);
             TokenDomain tokenDomain = mapperDTOToDomain.mapToDomain(dto, TokenDomain.class);
             tokenDomain.setUsuarioDomain(usuarioMapperDToToDomain.mapToDomain(dto.getUsuarioDTO(), UsuarioDomain.class));
             useCase.execute(tokenDomain);

@@ -13,6 +13,7 @@ import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 @Component
 public class MailgunService implements SendEmail {
@@ -24,8 +25,8 @@ public class MailgunService implements SendEmail {
     }
 
     @Override
-    public void send(String to, String token) {
-        String htmlContent = loadEmailTemplate().replace("{token}",token);
+    public void send(String to, UUID token) {
+        String htmlContent = loadEmailTemplate().replace("{token}",token.toString());
         try{
             MimeMessage message = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
@@ -39,6 +40,7 @@ public class MailgunService implements SendEmail {
         } catch (InfraestructureCustomException e) {
             throw e;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw InfraestructureCustomException.createTechnicalException(e, "Ocurrio un error inesperado y no se pudo enviar el correo");
         }
     }

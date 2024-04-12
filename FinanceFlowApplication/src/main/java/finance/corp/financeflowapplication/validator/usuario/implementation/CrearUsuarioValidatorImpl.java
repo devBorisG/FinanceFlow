@@ -1,6 +1,7 @@
 package finance.corp.financeflowapplication.validator.usuario.implementation;
 
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
+import finance.corp.financeflowapplication.validator.usuario.ContrasenaValidator;
 import finance.corp.financeflowapplication.validator.usuario.CorreoValidator;
 import finance.corp.financeflowapplication.validator.usuario.CrearUsuarioValidator;
 import finance.corp.financeflowdomain.repository.usuario.UsuarioRepository;
@@ -17,10 +18,12 @@ public class CrearUsuarioValidatorImpl implements CrearUsuarioValidator {
 
     private final UsuarioRepository usuarioRepository;
     private final CorreoValidator correoValidator;
+    private final ContrasenaValidator contrasenaValidator;
 
-    public CrearUsuarioValidatorImpl(UsuarioRepository usuarioRepository, CorreoValidator correoValidator) {
+    public CrearUsuarioValidatorImpl(UsuarioRepository usuarioRepository, CorreoValidator correoValidator, ContrasenaValidator contrasenaValidator) {
         this.usuarioRepository = usuarioRepository;
         this.correoValidator = correoValidator;
+        this.contrasenaValidator = contrasenaValidator;
     }
 
     @Override
@@ -30,6 +33,7 @@ public class CrearUsuarioValidatorImpl implements CrearUsuarioValidator {
 
     private void verifyUserIntegrity(UsuarioDTO dto) {
         correoValidator.isValid(dto.getCorreo());
+        contrasenaValidator.isValid(dto.getContrasena());
         if (verifyMandatoryUserFields(dto)) {
             throw AplicationCustomException.createUserException("Todos los campos son obligatorios");
         }
