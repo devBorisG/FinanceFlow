@@ -4,7 +4,6 @@ import finance.corp.financeflowapplication.dto.token.TokenDTO;
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
 import finance.corp.financeflowapplication.service.usuario.CambioContrasenaFacade;
 import finance.corp.financeflowapplication.validator.usuario.CambioContrasenaValidator;
-import finance.corp.financeflowapplication.validator.usuario.ContrasenaValidator;
 import finance.corp.financeflowdomain.domain.TokenDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
 import finance.corp.financeflowdomain.port.input.usuario.CambioContrasenaUseCase;

@@ -10,7 +10,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -25,22 +25,24 @@ public class CambioContrasenaUseCaseImpl implements CambioContrasenaUseCase{
 
     @Override
     public void execute(TokenDomain domain) {
+        LocalDateTime fechaActual = LocalDateTime.now();
+
         try{
             Optional<TokenEntity> tokenEntity = tokenRepository.findById(domain.getToken());
 
             if (tokenEntity.isPresent()){
-                tokenEntity.get().getUsuario().setContrasena(
-                        passwordEncoder.encode(
-                                domain.getUsuarioDomain().getContrasena()
-                        )
-                );
-                tokenRepository.save(tokenEntity.get());
+                if (fechaActual.isBefore(tokenEntity.get().getFechaExpiracion())){
+                    tokenEntity.get().getUsuario().setContrasena(
+                            passwordEncoder.encode(
+                                    domain.getUsuarioDomain().getContrasena()
+                            )
+                    );
+                    tokenRepository.save(tokenEntity.get());
+                }
                 tokenRepository.delete(tokenEntity.get());
             }
         }catch (DataAccessException e){
             throw AplicationCustomException.createTechnicalException(e, "Error al intentar recuperar el id del token.");
-        }catch (NoSuchElementException e){
-            throw AplicationCustomException.createTechnicalException(e, "No se encontro el token.");
         }catch (TransactionRequiredException e){
             throw AplicationCustomException.createTechnicalException(e, "Se requiere una transacción para esta operación.");
         }

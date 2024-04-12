@@ -32,7 +32,7 @@ public class CambioContrasenaController {
         HttpStatus status = HttpStatus.OK;
         try{
             facade.execute(tokenDTO);
-            response.addSuccessMessage("Token valido");
+            response.addSuccessMessage("La contrasena se ha cambiado con exito");
         }catch (final FinanceFlowCustomException e){
             status = HttpStatus.BAD_REQUEST;
             if (e.isTechnicalException()){
