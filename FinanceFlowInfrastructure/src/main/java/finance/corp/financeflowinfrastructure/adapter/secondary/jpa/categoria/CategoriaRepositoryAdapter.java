@@ -1,4 +1,4 @@
-package finance.corp.financeflowdomain.repository.categoria;
+package finance.corp.financeflowinfrastructure.adapter.secondary.jpa.categoria;
 
 import finance.corp.financeflowdomain.entity.CategoriaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface CategoriaRepository{
+@Repository
+public interface CategoriaRepositoryAdapter extends JpaRepository<CategoriaEntity, UUID> {
     Optional<List<CategoriaEntity>> findByUsuario_Id(UUID id);
-    void save(CategoriaEntity categoriaEntity);
-    boolean existsById(UUID id);
 }

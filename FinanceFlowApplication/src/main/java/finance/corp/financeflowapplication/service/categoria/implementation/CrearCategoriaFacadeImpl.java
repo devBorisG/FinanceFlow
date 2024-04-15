@@ -1,9 +1,11 @@
 package finance.corp.financeflowapplication.service.categoria.implementation;
 
 import finance.corp.financeflowapplication.dto.categoria.CategoriaDTO;
+import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
 import finance.corp.financeflowapplication.service.categoria.CrearCategoriaFacade;
 import finance.corp.financeflowapplication.validator.categoria.CrearCategoriaValidator;
 import finance.corp.financeflowdomain.domain.CategoriaDomain;
+import finance.corp.financeflowdomain.domain.UsuarioDomain;
 import finance.corp.financeflowdomain.port.input.categoria.CrearCategoriaUseCase;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
 import finance.corp.financeflowutils.exception.domain.DomainCustomException;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CrearCategoriaFacadeImpl implements CrearCategoriaFacade {
     MapperDTOToDomain<CategoriaDTO, CategoriaDomain> mapperDTOToDomain = new MapperDTOToDomain<>();
+    MapperDTOToDomain<UsuarioDTO, UsuarioDomain> mapperDTOToDomainUsuario = new MapperDTOToDomain<>();
     private final CrearCategoriaUseCase crearCategoriaUseCase;
     private final CrearCategoriaValidator validator;
 
@@ -29,6 +32,7 @@ public class CrearCategoriaFacadeImpl implements CrearCategoriaFacade {
         validator.isValid(dto);
         try{
             CategoriaDomain categoriaDomain = mapperDTOToDomain.mapToDomain(dto, CategoriaDomain.class);
+            categoriaDomain.setUsuarioDomain(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuarioDTO(), UsuarioDomain.class));
             crearCategoriaUseCase.execute(categoriaDomain);
         } catch (AplicationCustomException e){
             throw e;
