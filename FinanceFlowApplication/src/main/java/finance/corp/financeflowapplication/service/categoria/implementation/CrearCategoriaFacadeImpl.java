@@ -2,6 +2,7 @@ package finance.corp.financeflowapplication.service.categoria.implementation;
 
 import finance.corp.financeflowapplication.dto.categoria.CategoriaDTO;
 import finance.corp.financeflowapplication.service.categoria.CrearCategoriaFacade;
+import finance.corp.financeflowapplication.validator.categoria.CrearCategoriaValidator;
 import finance.corp.financeflowdomain.domain.CategoriaDomain;
 import finance.corp.financeflowdomain.port.input.categoria.CrearCategoriaUseCase;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
@@ -16,14 +17,16 @@ import org.springframework.stereotype.Service;
 public class CrearCategoriaFacadeImpl implements CrearCategoriaFacade {
     MapperDTOToDomain<CategoriaDTO, CategoriaDomain> mapperDTOToDomain = new MapperDTOToDomain<>();
     private final CrearCategoriaUseCase crearCategoriaUseCase;
+    private final CrearCategoriaValidator validator;
 
-    public CrearCategoriaFacadeImpl(CrearCategoriaUseCase crearCategoriaUseCase) {
+    public CrearCategoriaFacadeImpl(CrearCategoriaUseCase crearCategoriaUseCase, CrearCategoriaValidator validator) {
         this.crearCategoriaUseCase = crearCategoriaUseCase;
+        this.validator = validator;
     }
 
     @Override
     public void execute(CategoriaDTO dto) {
-        //TODO: Crear validator para categoria
+        validator.isValid(dto);
         try{
             CategoriaDomain categoriaDomain = mapperDTOToDomain.mapToDomain(dto, CategoriaDomain.class);
             crearCategoriaUseCase.execute(categoriaDomain);
