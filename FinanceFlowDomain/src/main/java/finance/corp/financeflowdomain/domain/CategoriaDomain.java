@@ -11,4 +11,5 @@ public class CategoriaDomain {
     private UUID id;
     private String nombre;
     private String descripcion;
+    private UsuarioDomain usuarioDomain;
 }

@@ -1,9 +1,14 @@
 package finance.corp.financeflowapplication.dto.categoria;
 
+import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
+import finance.corp.financeflowapplication.dto.usuario.builder.UsuarioDTOBuilder;
+import lombok.Getter;
+
 import java.util.UUID;
 
 import static finance.corp.financeflowutils.constant.Constants.DEFAULT_UUID;
 import static finance.corp.financeflowutils.constant.Constants.EMPTY_STRING;
+import static finance.corp.financeflowutils.helper.ObjectHelper.getDefaultIfNull;
 import static finance.corp.financeflowutils.helper.StringHelper.applyTrim;
 import static finance.corp.financeflowutils.helper.UUIDHelper.getDefaultUUID;
 
@@ -11,10 +16,12 @@ import static finance.corp.financeflowutils.helper.UUIDHelper.getDefaultUUID;
  * This class represents a DTO (Data Transfer Object) for the Categoria entity.
  * It is used to transfer data between processes or across network connections.
  */
+@Getter
 public class CategoriaDTO {
     private UUID id;
     private String nombre;
     private String descripcion;
+    private UsuarioDTO usuarioDTO;
 
     /**
      * Default constructor that initializes the object with default values.
@@ -23,6 +30,7 @@ public class CategoriaDTO {
         setId(DEFAULT_UUID);
         setNombre(EMPTY_STRING);
         setDescripcion(EMPTY_STRING);
+        setUsuarioDTO(UsuarioDTOBuilder.getUsuarioDTOBuilder().buildDefault());
     }
 
     /**
@@ -32,10 +40,11 @@ public class CategoriaDTO {
      * @param nombre The name of the Categoria.
      * @param descripcion The description of the Categoria.
      */
-    public CategoriaDTO(final UUID id,final String nombre,final String descripcion) {
+    public CategoriaDTO(final UUID id,final String nombre,final String descripcion, final UsuarioDTO usuarioDTO) {
         setId(id);
         setNombre(nombre);
         setDescripcion(descripcion);
+        setUsuarioDTO(usuarioDTO);
     }
 
     /**
@@ -46,8 +55,8 @@ public class CategoriaDTO {
      * @param descripcion The description of the Categoria.
      * @return A new instance of CategoriaDTO.
      */
-    public static CategoriaDTO create(final UUID id,final String nombre,final String descripcion) {
-        return new CategoriaDTO(id, nombre, descripcion);
+    public static CategoriaDTO create(final UUID id,final String nombre,final String descripcion, final UsuarioDTO usuarioDTO) {
+        return new CategoriaDTO(id, nombre, descripcion, usuarioDTO);
     }
 
     /**
@@ -59,14 +68,6 @@ public class CategoriaDTO {
         return new CategoriaDTO();
     }
 
-    /**
-     * Getter for the id.
-     *
-     * @return The UUID of the Categoria.
-     */
-    public UUID getId() {
-        return id;
-    }
 
     /**
      * Setter for the id.
@@ -77,14 +78,6 @@ public class CategoriaDTO {
         this.id = getDefaultUUID(id);
     }
 
-    /**
-     * Getter for the nombre.
-     *
-     * @return The name of the Categoria.
-     */
-    public String getNombre() {
-        return nombre;
-    }
 
     /**
      * Setter for the nombre.
@@ -95,14 +88,6 @@ public class CategoriaDTO {
         this.nombre = applyTrim(nombre);
     }
 
-    /**
-     * Getter for the descripcion.
-     *
-     * @return The description of the Categoria.
-     */
-    public String getDescripcion() {
-        return descripcion;
-    }
 
     /**
      * Setter for the descripcion.
@@ -111,5 +96,9 @@ public class CategoriaDTO {
      */
     public void setDescripcion(final String descripcion) {
         this.descripcion = applyTrim(descripcion);
+    }
+
+    public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
+        this.usuarioDTO = getDefaultIfNull(usuarioDTO, UsuarioDTOBuilder.getUsuarioDTOBuilder().buildDefault());
     }
 }
