@@ -18,7 +18,7 @@ public class JpaCategoriaRepositoryImpl implements CategoriaRepository {
     }
 
     @Override
-    public Optional<List<CategoriaEntity>> findByUsuario_Id(UUID id) {
+    public Optional<List<CategoriaEntity>> findByUsuarioId(UUID id) {
         return categoriaRepositoryAdapter.findByUsuario_Id(id);
     }
 
@@ -30,5 +30,10 @@ public class JpaCategoriaRepositoryImpl implements CategoriaRepository {
     @Override
     public boolean existsById(UUID id) {
         return categoriaRepositoryAdapter.existsById(id);
+    }
+
+    @Override
+    public void delete(CategoriaEntity categoriaEntity) {
+        categoriaRepositoryAdapter.delete(categoriaEntity);
     }
 }

@@ -9,7 +9,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CategoriaRepository{
-    Optional<List<CategoriaEntity>> findByUsuario_Id(UUID id);
+    Optional<List<CategoriaEntity>> findByUsuarioId(UUID id);
     void save(CategoriaEntity categoriaEntity);
     boolean existsById(UUID id);
+    void delete(CategoriaEntity categoriaEntity);
 }

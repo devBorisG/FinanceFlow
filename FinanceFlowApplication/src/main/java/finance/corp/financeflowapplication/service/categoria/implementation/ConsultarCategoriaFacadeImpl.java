@@ -10,9 +10,9 @@ import finance.corp.financeflowutils.exception.aplication.AplicationCustomExcept
 import finance.corp.financeflowutils.exception.domain.DomainCustomException;
 import finance.corp.financeflowutils.mapper.MapperDTOToDomain;
 import finance.corp.financeflowutils.mapper.MapperDomainToDTO;
-import jakarta.transaction.Transactional;
 import org.hibernate.TransactionException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;

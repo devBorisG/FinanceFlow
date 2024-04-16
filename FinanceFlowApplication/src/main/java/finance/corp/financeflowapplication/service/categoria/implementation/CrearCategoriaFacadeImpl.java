@@ -10,9 +10,9 @@ import finance.corp.financeflowdomain.port.input.categoria.CrearCategoriaUseCase
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
 import finance.corp.financeflowutils.exception.domain.DomainCustomException;
 import finance.corp.financeflowutils.mapper.MapperDTOToDomain;
-import jakarta.transaction.Transactional;
 import org.hibernate.TransactionException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Service
