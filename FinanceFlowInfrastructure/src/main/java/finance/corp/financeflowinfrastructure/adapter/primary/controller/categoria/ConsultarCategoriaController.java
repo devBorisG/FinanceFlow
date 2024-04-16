@@ -2,7 +2,6 @@ package finance.corp.financeflowinfrastructure.adapter.primary.controller.catego
 
 import finance.corp.financeflowapplication.dto.categoria.CategoriaDTO;
 import finance.corp.financeflowapplication.dto.categoria.builder.CategoriaDTOBuilder;
-import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
 import finance.corp.financeflowapplication.dto.usuario.builder.UsuarioDTOBuilder;
 import finance.corp.financeflowapplication.service.categoria.ConsultarCategoriaFacade;
 import finance.corp.financeflowinfrastructure.adapter.primary.response.Response;

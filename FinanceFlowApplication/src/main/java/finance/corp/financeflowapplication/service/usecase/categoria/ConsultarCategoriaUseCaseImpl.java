@@ -41,7 +41,7 @@ public class ConsultarCategoriaUseCaseImpl implements ConsultarCategoriaUseCase 
                 Optional<List<CategoriaEntity>> entities = categoriaRepository.findByUsuario_Id(entity.getUsuario().getId());
                 if(entities.isPresent()){
                     return entities.get().stream()
-                            .map(value -> mapperEntityToDomain.mapToDomain(entity, CategoriaDomain.class))
+                            .map(value -> mapperEntityToDomain.mapToDomain(value, CategoriaDomain.class))
                             .toList();
                 }
             }
