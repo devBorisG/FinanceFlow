@@ -38,7 +38,7 @@ public class ConsultarCategoriaUseCaseImpl implements ConsultarCategoriaUseCase 
                 CategoriaEntity entity = mapperDomainToEntity.mapToEntity(domain.get(), CategoriaEntity.class);
                 UsuarioEntity usuarioEntity = mapperDomainToEntityUsuario.mapToEntity(domain.get().getUsuarioDomain(), UsuarioEntity.class);
                 entity.setUsuario(usuarioEntity);
-                Optional<List<CategoriaEntity>> entities = categoriaRepository.findByUsuario_Id(entity.getUsuario().getId());
+                Optional<List<CategoriaEntity>> entities = categoriaRepository.findByUsuarioId(entity.getUsuario().getId());
                 if(entities.isPresent()){
                     return entities.get().stream()
                             .map(value -> mapperEntityToDomain.mapToDomain(value, CategoriaDomain.class))
