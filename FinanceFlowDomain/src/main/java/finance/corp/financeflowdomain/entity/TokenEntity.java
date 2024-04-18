@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Entity
 @Table(name = "\"Token\"", schema = "public")
 public class TokenEntity {
     @Id
-    String token;
+    UUID token;
     LocalDateTime fechaCreacion;
     LocalDateTime fechaExpiracion;
     @OneToOne

@@ -43,7 +43,6 @@ public class EnviarCorreoRecuperacionUseCaseImpl implements EnviarCorreoRecupera
                 tokenEntity.setUsuario(usuarioEntity.get());
                 tokenRepository.save(tokenEntity);
                 sendEmail.send(domain.getUsuarioDomain().getCorreo(), domain.getToken());
-                tokenRepository.delete(tokenEntity);
             }
         }catch (InfraestructureCustomException e){
             throw DomainCustomException.createTechnicalException(e, e.getMessage());
