@@ -22,17 +22,25 @@ repositories {
 }
 
 ext {
-	set('springCloudVersion', "2023.0.0")
+	set('springCloudAzureVersion', "5.10.0")
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.cloud:spring-cloud-starter-vault-config'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'com.azure.spring:spring-cloud-azure-starter-keyvault'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation group: 'com.mailgun', name: 'mailgun-java', version: '1.0.8'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//Dependecias de mailgun
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'javax.ws.rs:javax.ws.rs-api:2.1.1'
+	implementation 'net.sargue:mailgun:1.8.0'
+	implementation 'org.glassfish.jersey.core:jersey-common:2.34'
 	//Dependencias de capas
 	implementation project(':FinanceFlowUtils')
 	implementation project(':FinanceFlowDomain')
@@ -41,7 +49,7 @@ dependencies {
 
 dependencyManagement {
 	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		mavenBom "com.azure.spring:spring-cloud-azure-dependencies:${springCloudAzureVersion}"
 	}
 }
 
