@@ -33,8 +33,8 @@ public class EliminarUsuarioUseCaseImpl implements EliminarUsuarioUseCase {
             Optional<UsuarioDomain> consulta = consultarUsuarioUseCase.execute(Optional.of(domain)).stream().findFirst();
             if (consulta.isPresent()){
                 UsuarioEntity usuarioEntity = new UsuarioEntity();
-                BeanUtils.copyProperties(consulta.get(), usuarioEntity);
-                usuarioRepository.delete(usuarioEntity);
+                BeanUtils.copyProperties(domain, usuarioEntity);
+                usuarioRepository.deleteById(usuarioEntity.getId());
             } else {
             throw AplicationCustomException.createTechnicalException("no se ha logrado encontrar");
             }

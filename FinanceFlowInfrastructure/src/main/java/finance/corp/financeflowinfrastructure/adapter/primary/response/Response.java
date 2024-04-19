@@ -65,7 +65,4 @@ public class Response<T> {
         getMessages().add(Message.createSuccessMessage(content));
     }
 
-    public void addSuccesMessage(final String s) {
-        getMessages().add(Message.createSuccessMessage(s));
-    }
 }

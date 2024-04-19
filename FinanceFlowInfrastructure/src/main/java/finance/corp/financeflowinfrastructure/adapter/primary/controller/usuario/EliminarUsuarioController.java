@@ -1,6 +1,7 @@
 package finance.corp.financeflowinfrastructure.adapter.primary.controller.usuario;
 
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
+import finance.corp.financeflowapplication.dto.usuario.builder.UsuarioDTOBuilder;
 import finance.corp.financeflowapplication.service.usuario.EliminarUsuarioFacade;
 import finance.corp.financeflowinfrastructure.adapter.primary.response.Response;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
@@ -14,23 +15,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/finance-flow/v1/usuario")
 public class EliminarUsuarioController {
     @Autowired
-    private EliminarUsuarioFacade facade;
+    private final EliminarUsuarioFacade facade;
+
+    public EliminarUsuarioController(EliminarUsuarioFacade facade) {
+        this.facade = facade;
+    }
 
     @DeleteMapping()
-    public ResponseEntity<Response<UsuarioDTO>> execute(@RequestParam UsuarioDTO usuarioDTO) {
+    public ResponseEntity<Response<UsuarioDTO>> execute(@RequestParam UUID id) {
         final Response<UsuarioDTO> response = new Response<>();
         HttpStatus httpStatus = HttpStatus.OK;
+        UsuarioDTO usuarioDTO = UsuarioDTOBuilder.getUsuarioDTOBuilder().setId(id).build();
         try {
             facade.execute(usuarioDTO);
             List<UsuarioDTO> data = new ArrayList<>();
             data.add(usuarioDTO);
-            response.addSuccesMessage("Se ha consultado correctamente para eliminar");
-            response.setData(data);
+            response.addSuccessMessage("Usuario Eliminado correctamente");
         }catch (final AplicationCustomException aplicationCustomException){
             httpStatus = HttpStatus.BAD_REQUEST;
             if (aplicationCustomException.isTechnicalException()) {
