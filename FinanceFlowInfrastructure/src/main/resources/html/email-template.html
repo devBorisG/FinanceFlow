@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Recuperar Contraseña</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h2{
+            font-size: 40px;
+        }
+        .email-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-radius: 5px;
+            text-align: center;
+            color: #000000;
+        }
+        .email-content {
+            margin-bottom: 20px;
+        }
+        .email-button {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #3498db;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <h2>Recuperación de Contraseña</h2>
+    <p class="email-content">Hemos recibido una solicitud para restablecer tu contraseña. Si no has hecho esta solicitud, puedes ignorar este correo electrónico.</p>
+    <p class="email-content">De lo contrario, puedes restablecer tu contraseña usando el siguiente enlace:</p>
+    <a href="https://www.tu-sitio-web.com/recuperar-contrasena?token={token}" target="_blank" rel="noopener noreferrer" class="email-button" style="text-decoration: none; color:#ffffff">Restablecer Contraseña</a>
+</div>
+</body>
+</html>
