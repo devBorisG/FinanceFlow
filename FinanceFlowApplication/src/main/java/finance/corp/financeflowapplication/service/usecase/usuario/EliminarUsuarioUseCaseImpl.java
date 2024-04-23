@@ -6,11 +6,11 @@ import finance.corp.financeflowdomain.port.input.usuario.ConsultarUsuarioUseCase
 import finance.corp.financeflowdomain.port.input.usuario.EliminarUsuarioUseCase;
 import finance.corp.financeflowdomain.repository.usuario.UsuarioRepository;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
-import finance.corp.financeflowutils.exception.repository.RepositoryCustomException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.repository.core.RepositoryCreationException;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,7 +19,6 @@ import java.util.Optional;
 public class EliminarUsuarioUseCaseImpl implements EliminarUsuarioUseCase {
     @Autowired
     private final UsuarioRepository usuarioRepository;
-    @Autowired
     private final ConsultarUsuarioUseCase consultarUsuarioUseCase;
 
     public EliminarUsuarioUseCaseImpl(UsuarioRepository usuarioRepository, ConsultarUsuarioUseCase consultarUsuarioUseCase) {
@@ -40,7 +39,7 @@ public class EliminarUsuarioUseCaseImpl implements EliminarUsuarioUseCase {
             }
         }catch (AplicationCustomException e){
             throw e;
-        }catch (RepositoryCustomException exception){
+        }catch (JpaSystemException exception){
             throw AplicationCustomException.createTechnicalException("No se ha logrado consultar");
         }catch (Exception exception){
             throw AplicationCustomException.createTechnicalException("errro fatal");
