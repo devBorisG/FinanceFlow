@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static finance.corp.financeflowutils.helper.ObjectHelper.isNull;
 import static finance.corp.financeflowutils.helper.StringHelper.isEmpty;
 import static finance.corp.financeflowutils.helper.UUIDHelper.isDefaultUUID;
 
@@ -30,26 +29,29 @@ public class ModificarUsuarioValidatorImpl implements ModificarUsuarioValidator 
     public void isValid(UsuarioDTO dto) {
         validarUsuario(dto);
 
-        }
-        private void validarUsuario(UsuarioDTO dto) {
-            correoValidator.isValid(dto.getCorreo());
+    }
 
-            if (usuarioRepository.findById(dto.getId()).isEmpty()) {
-                throw AplicationCustomException.createUserException("El usuario que desea actualizar no existe");
-            }
-            if (isOnlyLettersAndSpaces(dto.getNombre() + dto.getApellido())) {
-                throw AplicationCustomException.createUserException("Nombres y apellidos solo pueden contener letras y espacios");
-            }
-            if (verifyMandatoryUserFields(dto)) {
-                throw AplicationCustomException.createUserException("Todos los campos son obligatorios");
-            }
+    private void validarUsuario(UsuarioDTO dto) {
+        correoValidator.isValid(dto.getCorreo());
+
+        if (usuarioRepository.findById(dto.getId()).isEmpty()) {
+            throw AplicationCustomException.createUserException("El usuario que desea actualizar no existe");
         }
+        if (isOnlyLettersAndSpaces(dto.getNombre() + dto.getApellido())) {
+            throw AplicationCustomException.createUserException("Nombres y apellidos solo pueden contener letras y espacios");
+        }
+        if (verifyMandatoryUserFields(dto)) {
+            throw AplicationCustomException.createUserException("Todos los campos son obligatorios");
+        }
+    }
+
     private boolean isOnlyLettersAndSpaces(String name) {
         String nameRegex = "^[a-zA-Z\\s]*$";
         Pattern pattern = Pattern.compile(nameRegex);
         Matcher matcher = pattern.matcher(name);
         return !matcher.matches();
     }
+
     private boolean verifyMandatoryUserFields(UsuarioDTO dto) {
         return isDefaultUUID(dto.getId()) || isEmpty(dto.getNombre()) || isEmpty(dto.getApellido()) ||
                 isEmpty(dto.getCorreo()) || isEmpty(dto.getContrasena());

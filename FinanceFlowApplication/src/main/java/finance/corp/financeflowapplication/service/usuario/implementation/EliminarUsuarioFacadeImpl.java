@@ -6,17 +6,15 @@ import finance.corp.financeflowdomain.domain.UsuarioDomain;
 import finance.corp.financeflowdomain.port.input.usuario.EliminarUsuarioUseCase;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
 import finance.corp.financeflowutils.mapper.MapperDTOToDomain;
-import finance.corp.financeflowutils.mapper.MapperDomainToDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 
 @Service
 @Transactional
 public class EliminarUsuarioFacadeImpl implements EliminarUsuarioFacade {
-    @Autowired
+
     private final EliminarUsuarioUseCase eliminarUsuarioUseCase;
     MapperDTOToDomain<UsuarioDTO, UsuarioDomain> mapperDTOToDomain = new MapperDTOToDomain<>();
 

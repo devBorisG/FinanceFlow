@@ -8,14 +8,13 @@ import finance.corp.financeflowdomain.port.input.usuario.ModificarUsuarioUseCase
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
 import finance.corp.financeflowutils.mapper.MapperDTOToDomain;
 import org.hibernate.TransactionException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
 public class ModificarUsuarioFacadeImpl implements ModificarUsuarioFacade {
-    @Autowired
+
     private final ModificarUsuarioUseCase modificarUsuarioUseCase;
     private final ModificarUsuarioValidator modificarUsuarioValidator;
 
@@ -32,15 +31,13 @@ public class ModificarUsuarioFacadeImpl implements ModificarUsuarioFacade {
             UsuarioDomain usuarioDomain = mapperDTOToDomain.mapToDomain(dto, UsuarioDomain.class);
             modificarUsuarioValidator.isValid(dto);
             modificarUsuarioUseCase.execute(usuarioDomain);
-
-        }catch (
-    AplicationCustomException e){
-        throw e;
-    }catch (
-    TransactionException e){
-        throw AplicationCustomException.createTechnicalException(e,"Ocurrio un error en la transaccion.");
-    }catch (Exception e){
-        throw AplicationCustomException.createTechnicalException(e,"Ocurrio un error inesperado ejecutando la transaccion.");
-    }
+        } catch (AplicationCustomException e) {
+            throw e;
+        } catch (
+                TransactionException e) {
+            throw AplicationCustomException.createTechnicalException(e, "Ocurrio un error en la transaccion.");
+        } catch (Exception e) {
+            throw AplicationCustomException.createTechnicalException(e, "Ocurrio un error inesperado ejecutando la transaccion para modificar los datos del usuario.");
+        }
     }
 }

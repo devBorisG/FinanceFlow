@@ -1,37 +1,37 @@
-package finance.corp.financeflowapplication.service.usecase.usuario;
+package finance.corp.financeflowapplication.service.usecase.egreso;
 
+import finance.corp.financeflowdomain.domain.EgresoDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
+import finance.corp.financeflowdomain.entity.EgresoEntity;
 import finance.corp.financeflowdomain.entity.UsuarioEntity;
-import finance.corp.financeflowdomain.port.input.usuario.ModificarUsuarioUseCase;
-import finance.corp.financeflowdomain.repository.usuario.UsuarioRepository;
+import finance.corp.financeflowdomain.port.input.egreso.EditarEgresoUseCase;
+import finance.corp.financeflowdomain.repository.egreso.EgresoRepository;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
 import finance.corp.financeflowutils.mapper.MapperDomainToEntity;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ModificarUsuarioUseCaseImpl implements ModificarUsuarioUseCase {
+public class EditarEgresoUseCaseImpl implements EditarEgresoUseCase {
+    private final EgresoRepository egresoRepository;
+    MapperDomainToEntity<EgresoDomain, EgresoEntity> mapperDomainToEntity = new MapperDomainToEntity<>();
+    MapperDomainToEntity<UsuarioDomain, UsuarioEntity> mapperDomainToEntityUsuario = new MapperDomainToEntity<>();
 
-
-    private final UsuarioRepository usuarioRepository;
-    public ModificarUsuarioUseCaseImpl(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    public EditarEgresoUseCaseImpl(EgresoRepository egresoRepository) {
+        this.egresoRepository = egresoRepository;
     }
-    MapperDomainToEntity<UsuarioDomain, UsuarioEntity> mapperDomainToEntity = new MapperDomainToEntity<>();
 
     @Override
-    public void execute(UsuarioDomain domain) {
+    public void execute(EgresoDomain domain) {
         try {
-            Optional<UsuarioEntity> optionalUsuarioEntity = usuarioRepository.findById(domain.getId());
-            if (optionalUsuarioEntity.isPresent()) {
-                UsuarioEntity  usuarioEntity = mapperDomainToEntity.mapToEntity(domain, UsuarioEntity.class);
-                usuarioRepository.save(usuarioEntity);
-            }else {
-                throw new RuntimeException("El usuario " + domain.getId() + "No existe");
-            }
+            EgresoEntity entity = mapperDomainToEntity.mapToEntity(domain,EgresoEntity.class);
+            entity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(),UsuarioEntity.class));
+            egresoRepository.save(entity);
         } catch(DataIntegrityViolationException exception){
             throw AplicationCustomException.createTechnicalException(exception,"Se ha violado la integridad de los datos");
         } catch(TransactionSystemException exception){
@@ -41,6 +41,7 @@ public class ModificarUsuarioUseCaseImpl implements ModificarUsuarioUseCase {
         }catch (Exception exception){
             throw AplicationCustomException.createTechnicalException(exception,"Ocurrio un error inesperado");
         }
+
 
     }
 }
