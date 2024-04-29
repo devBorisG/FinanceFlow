@@ -1,7 +1,9 @@
 package finance.corp.financeflowapplication.service.usecase.ingreso;
 
+import finance.corp.financeflowdomain.domain.CategoriaDomain;
 import finance.corp.financeflowdomain.domain.IngresoDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
+import finance.corp.financeflowdomain.entity.CategoriaEntity;
 import finance.corp.financeflowdomain.entity.IngresoEntity;
 import finance.corp.financeflowdomain.entity.UsuarioEntity;
 import finance.corp.financeflowdomain.port.input.ingreso.ConsultarIngresoUseCase;
@@ -24,6 +26,7 @@ public class ConsultarIngresoUseCaseImpl implements ConsultarIngresoUseCase {
 
     MapperDomainToEntity<IngresoDomain, IngresoEntity> mapperDomainToEntity = new MapperDomainToEntity<>();
     MapperDomainToEntity<UsuarioDomain, UsuarioEntity> mapperDomainToEntityUsuario = new MapperDomainToEntity<>();
+    MapperDomainToEntity<CategoriaDomain, CategoriaEntity> mapperDomainToEntityCategoria = new MapperDomainToEntity<>();
     MapperEntityToDomain<IngresoEntity,IngresoDomain> mapperEntityToDomain = new MapperEntityToDomain<>();
     private final IngresoRepository ingresoRepository;
 
@@ -37,7 +40,9 @@ public class ConsultarIngresoUseCaseImpl implements ConsultarIngresoUseCase {
             if(domain.isPresent()){
                 IngresoEntity entity = mapperDomainToEntity.mapToEntity(domain.get(),IngresoEntity.class);
                 UsuarioEntity usuarioEntity = mapperDomainToEntityUsuario.mapToEntity(domain.get().getUsuario(),UsuarioEntity.class);
+                CategoriaEntity categoriaEntity = mapperDomainToEntityCategoria.mapToEntity(domain.get().getCategoria(),CategoriaEntity.class);
                 entity.setUsuario(usuarioEntity);
+                entity.setCategoria(categoriaEntity);
                 Optional<List<IngresoEntity>> entities = ingresoRepository.findByUsuarioId(entity.getUsuario().getId());
                 if(entities.isPresent()){
                     return entities.get().stream().map(value -> mapperEntityToDomain.mapToDomain(value, IngresoDomain.class)).toList();

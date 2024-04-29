@@ -1,8 +1,10 @@
 package finance.corp.financeflowapplication.ingreso.implementation;
 
+import finance.corp.financeflowapplication.dto.categoria.CategoriaDTO;
 import finance.corp.financeflowapplication.dto.ingreso.IngresoDTO;
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
 import finance.corp.financeflowapplication.ingreso.CrearIngresoFacade;
+import finance.corp.financeflowdomain.domain.CategoriaDomain;
 import finance.corp.financeflowdomain.domain.IngresoDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
 import finance.corp.financeflowdomain.port.input.ingreso.CrearIngresoUseCase;
@@ -19,6 +21,7 @@ public class CrearIngresoFacadeImpl implements CrearIngresoFacade {
 
     MapperDTOToDomain<IngresoDTO, IngresoDomain> mapperDTOToDomain = new MapperDTOToDomain<>();
     MapperDTOToDomain<UsuarioDTO, UsuarioDomain> mapperDTOToDomainUsuario = new MapperDTOToDomain<>();
+    MapperDTOToDomain<CategoriaDTO, CategoriaDomain> mapperDTOToDomainCategoria = new MapperDTOToDomain<>();
     private final CrearIngresoUseCase crearIngresoUseCase;
 
     public CrearIngresoFacadeImpl(CrearIngresoUseCase crearIngresoUseCase) {
@@ -30,6 +33,7 @@ public class CrearIngresoFacadeImpl implements CrearIngresoFacade {
         try{
             IngresoDomain ingresoDomain = mapperDTOToDomain.mapToDomain(dto, IngresoDomain.class);
             ingresoDomain.setUsuario(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(),UsuarioDomain.class));
+            ingresoDomain.setCategoria(mapperDTOToDomainCategoria.mapToDomain(dto.getCategoria(),CategoriaDomain.class));
             crearIngresoUseCase.execute(ingresoDomain);
         } catch(AplicationCustomException exception){
             throw exception;

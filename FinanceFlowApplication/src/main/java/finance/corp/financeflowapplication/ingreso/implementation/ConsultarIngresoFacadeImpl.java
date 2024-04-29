@@ -1,8 +1,10 @@
 package finance.corp.financeflowapplication.ingreso.implementation;
 
+import finance.corp.financeflowapplication.dto.categoria.CategoriaDTO;
 import finance.corp.financeflowapplication.dto.ingreso.IngresoDTO;
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
 import finance.corp.financeflowapplication.ingreso.ConsultarIngresoFacade;
+import finance.corp.financeflowdomain.domain.CategoriaDomain;
 import finance.corp.financeflowdomain.domain.IngresoDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
 import finance.corp.financeflowdomain.port.input.ingreso.ConsultarIngresoUseCase;
@@ -23,6 +25,7 @@ public class ConsultarIngresoFacadeImpl implements ConsultarIngresoFacade {
 
     MapperDTOToDomain<IngresoDTO, IngresoDomain> mapperDTOToDomain = new MapperDTOToDomain<>();
     MapperDTOToDomain<UsuarioDTO, UsuarioDomain> mapperDTOToDomainUsuario = new MapperDTOToDomain<>();
+    MapperDTOToDomain<CategoriaDTO, CategoriaDomain> mapperDTOToDomainCategoria = new MapperDTOToDomain<>();
     MapperDomainToDTO<IngresoDomain,IngresoDTO> mapperDomainToDTO = new MapperDomainToDTO<>();
     private final ConsultarIngresoUseCase consultarIngresoUseCase;
 
@@ -36,6 +39,7 @@ public class ConsultarIngresoFacadeImpl implements ConsultarIngresoFacade {
             if(dto.isPresent()){
                 IngresoDomain ingresoDomain = mapperDTOToDomain.mapToDomain(dto.get(),IngresoDomain.class);
                 ingresoDomain.setUsuario(mapperDTOToDomainUsuario.mapToDomain(dto.get().getUsuario(),UsuarioDomain.class));
+                ingresoDomain.setCategoria(mapperDTOToDomainCategoria.mapToDomain(dto.get().getCategoria(),CategoriaDomain.class));
                 return consultarIngresoUseCase.execute(Optional.of(ingresoDomain)).stream().map(value->mapperDomainToDTO.mapToDomain(value,IngresoDTO.class)).toList();
             }
             return null;

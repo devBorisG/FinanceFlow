@@ -1,7 +1,9 @@
 package finance.corp.financeflowapplication.service.usecase.ingreso;
 
+import finance.corp.financeflowdomain.domain.CategoriaDomain;
 import finance.corp.financeflowdomain.domain.IngresoDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
+import finance.corp.financeflowdomain.entity.CategoriaEntity;
 import finance.corp.financeflowdomain.entity.IngresoEntity;
 import finance.corp.financeflowdomain.entity.UsuarioEntity;
 import finance.corp.financeflowdomain.port.input.ingreso.CrearIngresoUseCase;
@@ -19,6 +21,7 @@ public class CrearIngresoUseCaseImpl implements CrearIngresoUseCase {
 
     MapperDomainToEntity<IngresoDomain, IngresoEntity> mapperDomainToEntity = new MapperDomainToEntity<>();
     MapperDomainToEntity<UsuarioDomain, UsuarioEntity> mapperDomainToEntityUsuario = new MapperDomainToEntity<>();
+    MapperDomainToEntity<CategoriaDomain, CategoriaEntity> mapperDomainToEntityCategoria = new MapperDomainToEntity<>();
 
     private final IngresoRepository ingresoRepository;
 
@@ -31,6 +34,7 @@ public class CrearIngresoUseCaseImpl implements CrearIngresoUseCase {
         try{
             IngresoEntity entity = mapperDomainToEntity.mapToEntity(domain,IngresoEntity.class);
             entity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(),UsuarioEntity.class));
+            entity.setCategoria(mapperDomainToEntityCategoria.mapToEntity(domain.getCategoria(),CategoriaEntity.class));
             ingresoRepository.save(entity);
         } catch(DataIntegrityViolationException exception){
             throw AplicationCustomException.createTechnicalException(exception,"No cumple con la integridad de los datos");
