@@ -1,8 +1,10 @@
 package finance.corp.financeflowapplication.service.egreso.implementation;
 
+import finance.corp.financeflowapplication.dto.categoria.CategoriaDTO;
 import finance.corp.financeflowapplication.dto.egreso.EgresoDTO;
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
 import finance.corp.financeflowapplication.service.egreso.ConsultarEgresoFacade;
+import finance.corp.financeflowdomain.domain.CategoriaDomain;
 import finance.corp.financeflowdomain.domain.EgresoDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
 import finance.corp.financeflowdomain.port.input.egreso.ConsultarEgresoUseCase;
@@ -21,6 +23,7 @@ public class ConsultarEgresoFacadeImpl implements ConsultarEgresoFacade {
     MapperDTOToDomain<EgresoDTO, EgresoDomain> mapperDTOToDomain = new MapperDTOToDomain<>();
     MapperDTOToDomain<UsuarioDTO, UsuarioDomain> mapperDTOToDomainUsuario = new MapperDTOToDomain<>();
     MapperDomainToDTO<EgresoDomain,EgresoDTO> mapperDomainToDTO = new MapperDomainToDTO<>();
+    MapperDTOToDomain<CategoriaDTO, CategoriaDomain> mapperDTOToDomainCategoria = new MapperDTOToDomain<>();
     private final ConsultarEgresoUseCase consultarEgresoUseCase;
 
     public ConsultarEgresoFacadeImpl(ConsultarEgresoUseCase consultarEgresoUseCase) {
@@ -34,6 +37,7 @@ public class ConsultarEgresoFacadeImpl implements ConsultarEgresoFacade {
                 if(dto.isPresent()){
                     EgresoDomain egresoDomain = mapperDTOToDomain.mapToDomain(dto.get(),EgresoDomain.class);
                     egresoDomain.setUsuario(mapperDTOToDomainUsuario.mapToDomain(dto.get().getUsuario(),UsuarioDomain.class));
+                    egresoDomain.setCategoria(mapperDTOToDomainCategoria.mapToDomain(dto.get().getCategoria(), CategoriaDomain.class));
                     return consultarEgresoUseCase.execute(Optional.of(egresoDomain)).stream().map(value->mapperDomainToDTO.mapToDomain(value,EgresoDTO.class)).toList();
                 }
                 return null;

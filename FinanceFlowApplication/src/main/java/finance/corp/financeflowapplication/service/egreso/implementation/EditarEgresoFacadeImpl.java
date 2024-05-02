@@ -1,8 +1,11 @@
 package finance.corp.financeflowapplication.service.egreso.implementation;
 
+import finance.corp.financeflowapplication.dto.categoria.CategoriaDTO;
 import finance.corp.financeflowapplication.dto.egreso.EgresoDTO;
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
 import finance.corp.financeflowapplication.service.egreso.EditarEgresoFacade;
+import finance.corp.financeflowapplication.validator.egreso.EditarEgresoValidator;
+import finance.corp.financeflowdomain.domain.CategoriaDomain;
 import finance.corp.financeflowdomain.domain.EgresoDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
 import finance.corp.financeflowdomain.port.input.egreso.EditarEgresoUseCase;
@@ -17,18 +20,24 @@ import org.springframework.stereotype.Service;
 public class EditarEgresoFacadeImpl implements EditarEgresoFacade {
     MapperDTOToDomain<EgresoDTO, EgresoDomain> mapperDTOToDomain = new MapperDTOToDomain<>();
     MapperDTOToDomain<UsuarioDTO, UsuarioDomain> mapperDTOToDomainUsuario = new MapperDTOToDomain<>();
-    private final EditarEgresoUseCase useCase;
+    MapperDTOToDomain<CategoriaDTO, CategoriaDomain> mapperDTOToDomainCategoria = new MapperDTOToDomain<>();
 
-    public EditarEgresoFacadeImpl(EditarEgresoUseCase useCase) {
+    private final EditarEgresoUseCase useCase;
+    private final EditarEgresoValidator editarEgresoValidator;
+
+    public EditarEgresoFacadeImpl(EditarEgresoUseCase useCase, EditarEgresoValidator editarEgresoValidator) {
         this.useCase = useCase;
+        this.editarEgresoValidator = editarEgresoValidator;
     }
 
     @Override
     public void execute(EgresoDTO dto) {
         EgresoDomain egresoDomain = mapperDTOToDomain.mapToDomain(dto,EgresoDomain.class);
         egresoDomain.setUsuario(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(),UsuarioDomain.class));
+        egresoDomain.setCategoria(mapperDTOToDomainCategoria.mapToDomain(dto.getCategoria(),CategoriaDomain.class));
         try{
             useCase.execute(egresoDomain);
+            editarEgresoValidator.isValid(dto);
         }catch (AplicationCustomException e) {
             throw e;
         } catch (TransactionException e) {

@@ -1,7 +1,9 @@
 package finance.corp.financeflowapplication.service.usecase.egreso;
 
+import finance.corp.financeflowdomain.domain.CategoriaDomain;
 import finance.corp.financeflowdomain.domain.EgresoDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
+import finance.corp.financeflowdomain.entity.CategoriaEntity;
 import finance.corp.financeflowdomain.entity.EgresoEntity;
 import finance.corp.financeflowdomain.entity.UsuarioEntity;
 import finance.corp.financeflowdomain.port.input.egreso.ConsultarEgresoUseCase;
@@ -10,7 +12,6 @@ import finance.corp.financeflowutils.exception.aplication.AplicationCustomExcept
 import finance.corp.financeflowutils.mapper.MapperDomainToEntity;
 import finance.corp.financeflowutils.mapper.MapperEntityToDomain;
 import jakarta.persistence.TransactionRequiredException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
@@ -23,13 +24,12 @@ import java.util.Optional;
 @Service
 public class ConsultarEgresoUseCaseImpl implements ConsultarEgresoUseCase {
 
-    @Autowired
     private final EgresoRepository egresoRepository;
 
     MapperDomainToEntity<EgresoDomain, EgresoEntity> mapperDomainToEntity = new MapperDomainToEntity<>();
     MapperDomainToEntity<UsuarioDomain, UsuarioEntity> mapperDomainToEntityUsuario = new MapperDomainToEntity<>();
     MapperEntityToDomain<EgresoEntity,EgresoDomain> mapperEntityToDomain = new MapperEntityToDomain<>();
-
+    MapperDomainToEntity<CategoriaDomain, CategoriaEntity> mapperDomainToEntityCategoria = new MapperDomainToEntity<>();
     public ConsultarEgresoUseCaseImpl(EgresoRepository egresoRepository) {
         this.egresoRepository = egresoRepository;
     }
@@ -41,8 +41,10 @@ public class ConsultarEgresoUseCaseImpl implements ConsultarEgresoUseCase {
             if(domain.isPresent()){
                 EgresoEntity entity = mapperDomainToEntity.mapToEntity(domain.get(),EgresoEntity.class);
                 UsuarioEntity usuarioEntity = mapperDomainToEntityUsuario.mapToEntity(domain.get().getUsuario(),UsuarioEntity.class);
+                CategoriaEntity categoriaEntity = mapperDomainToEntityCategoria.mapToEntity(domain.get().getCategoria(),CategoriaEntity.class);
                 entity.setUsuario(usuarioEntity);
-                Optional<List<EgresoEntity>> entities = egresoRepository.findByUsuario(entity.getUsuario().getId());
+                entity.setCategoria(categoriaEntity);
+                Optional<List<EgresoEntity>> entities = egresoRepository.findByUsuarioId(entity.getUsuario().getId());
                 if(entities.isPresent()){
                     return entities.get().stream().map(value -> mapperEntityToDomain.mapToDomain(value, EgresoDomain.class)).toList();
                 }

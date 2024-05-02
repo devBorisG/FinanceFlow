@@ -2,8 +2,6 @@ package finance.corp.financeflowinfrastructure.adapter.primary.controller.egreso
 
 import finance.corp.financeflowapplication.dto.egreso.EgresoDTO;
 import finance.corp.financeflowapplication.dto.egreso.builder.EgresoDTOBuilder;
-import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
-import finance.corp.financeflowapplication.dto.usuario.builder.UsuarioDTOBuilder;
 import finance.corp.financeflowapplication.service.egreso.EditarEgresoFacade;
 import finance.corp.financeflowinfrastructure.adapter.primary.response.Response;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;

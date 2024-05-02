@@ -1,7 +1,9 @@
 package finance.corp.financeflowapplication.service.usecase.egreso;
 
+import finance.corp.financeflowdomain.domain.CategoriaDomain;
 import finance.corp.financeflowdomain.domain.EgresoDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
+import finance.corp.financeflowdomain.entity.CategoriaEntity;
 import finance.corp.financeflowdomain.entity.EgresoEntity;
 import finance.corp.financeflowdomain.entity.UsuarioEntity;
 import finance.corp.financeflowdomain.port.input.egreso.CrearEgresoUseCase;
@@ -20,6 +22,7 @@ public class CrearEgresoUseCaseImpl implements CrearEgresoUseCase {
     private final EgresoRepository egresoRepository;
     MapperDomainToEntity<EgresoDomain, EgresoEntity> mapperDomainToEntity = new MapperDomainToEntity<>();
     MapperDomainToEntity<UsuarioDomain, UsuarioEntity> mapperDomainToEntityUsuario = new MapperDomainToEntity<>();
+    MapperDomainToEntity<CategoriaDomain, CategoriaEntity> mapperDomainToEntityCategoria = new MapperDomainToEntity<>();
 
     public CrearEgresoUseCaseImpl(EgresoRepository egresoRepository) {
         this.egresoRepository = egresoRepository;
@@ -29,9 +32,10 @@ public class CrearEgresoUseCaseImpl implements CrearEgresoUseCase {
         try {
             EgresoEntity entity = mapperDomainToEntity.mapToEntity(domain, EgresoEntity.class);
             entity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(), UsuarioEntity.class));
+            entity.setCategoria(mapperDomainToEntityCategoria.mapToEntity(domain.getCategoria(), CategoriaEntity.class));
             egresoRepository.save(entity);
         } catch (DataIntegrityViolationException e){
-            throw DomainCustomException.createTechnicalException(e,"Se ha violado la integridad de los datos al intentar guardar el usuario.");
+            throw DomainCustomException.createTechnicalException(e,"Se ha violado la integridad de los datos al intentar guardar el egreso.");
         }catch (TransactionSystemException e){
             throw DomainCustomException.createTechnicalException(e,"Hubo un problema con la transacción de la base de datos mientras se intentaba guardar la entidad.");
         }catch (TransactionRequiredException e){

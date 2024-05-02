@@ -2,7 +2,6 @@ package finance.corp.financeflowapplication.validator.egreso.implementation;
 
 import finance.corp.financeflowapplication.dto.categoria.CategoriaDTO;
 import finance.corp.financeflowapplication.dto.egreso.EgresoDTO;
-import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
 import finance.corp.financeflowapplication.validator.egreso.CrearEgresoValidator;
 import finance.corp.financeflowdomain.entity.CategoriaEntity;
 import finance.corp.financeflowdomain.repository.categoria.CategoriaRepository;
@@ -11,7 +10,6 @@ import finance.corp.financeflowutils.exception.aplication.AplicationCustomExcept
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,16 +35,25 @@ public class CrearEgresoValidatorImpl implements CrearEgresoValidator {
         if (isValidNumber(dto.getMonto())){
             throw AplicationCustomException.createUserException("Nombres y apellidos solo pueden contener letras y espacios");
         }
+        if (verifyMandatoryEgresoAttributes(dto)){
+            throw AplicationCustomException.createUserException("El egrso no puede estar vacio");
+        }
+        if (dto.getMonto()<=0){
+            throw AplicationCustomException.createUserException("El monto de la egreso no puede estar vacio, tiene que ser mayor que 0 y positivo");
+        }
+
     }
     private boolean isValidNumber(double number) {
         String numberString = String.valueOf(number);
-        String numberRegex = "^\\d+$";
+        String numberRegex = "^\\d+(\\.\\d+)?$";
         Pattern pattern = Pattern.compile(numberRegex);
         Matcher matcher = pattern.matcher(numberString);
-
         return matcher.matches();
     }
-
+    private boolean verifyMandatoryEgresoAttributes(EgresoDTO egresoDTO) {
+        return isDefaultUUID(egresoDTO.getId()) || isEmpty(egresoDTO.getDescripcion()) || isEmpty(egresoDTO.getNombre()) ||
+                egresoDTO.getMonto()==0.0;
+    }
     private boolean verifyCategoria(EgresoDTO egresoDTO) {
         CategoriaDTO categoriaDTO = new CategoriaDTO();
         CategoriaEntity categoriaEntity = new CategoriaEntity();

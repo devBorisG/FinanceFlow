@@ -1,9 +1,11 @@
 package finance.corp.financeflowapplication.service.egreso.implementation;
 
+import finance.corp.financeflowapplication.dto.categoria.CategoriaDTO;
 import finance.corp.financeflowapplication.dto.egreso.EgresoDTO;
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
 import finance.corp.financeflowapplication.service.egreso.CrearEgresoFacade;
 import finance.corp.financeflowapplication.validator.egreso.CrearEgresoValidator;
+import finance.corp.financeflowdomain.domain.CategoriaDomain;
 import finance.corp.financeflowdomain.domain.EgresoDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
 import finance.corp.financeflowdomain.port.input.egreso.CrearEgresoUseCase;
@@ -18,11 +20,13 @@ import org.springframework.transaction.TransactionException;
 @Service
 public class CrearEgresoFacadeImpl implements CrearEgresoFacade {
     private final CrearEgresoUseCase crearEgresoUseCase;
+    private final CrearEgresoValidator crearEgresoValidator;
     MapperDTOToDomain<EgresoDTO, EgresoDomain> mapperDTOToDomain = new MapperDTOToDomain<>();
     MapperDTOToDomain<UsuarioDTO, UsuarioDomain> mapperDTOToDomainUsuario = new MapperDTOToDomain<>();
-    public CrearEgresoFacadeImpl(CrearEgresoUseCase crearEgresoUseCase, CrearEgresoValidator crearEgresoValidator) {
+    MapperDTOToDomain<CategoriaDTO, CategoriaDomain> mapperDTOToDomainCategoria = new MapperDTOToDomain<>();
+    public CrearEgresoFacadeImpl(CrearEgresoUseCase crearEgresoUseCase, CrearEgresoValidator crearEgresoValidator1) {
         this.crearEgresoUseCase = crearEgresoUseCase;
-
+        this.crearEgresoValidator = crearEgresoValidator1;
     }
 
     @Override
@@ -30,7 +34,9 @@ public class CrearEgresoFacadeImpl implements CrearEgresoFacade {
         try{
             EgresoDomain egresoDomain = mapperDTOToDomain.mapToDomain(dto, EgresoDomain.class);
             egresoDomain.setUsuario(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(),UsuarioDomain.class));
+            egresoDomain.setCategoria(mapperDTOToDomainCategoria.mapToDomain(dto.getCategoria(),CategoriaDomain.class));
             crearEgresoUseCase.execute(egresoDomain);
+            crearEgresoValidator.isValid(dto);
 
         } catch(AplicationCustomException exception){
             throw exception;
@@ -39,8 +45,7 @@ public class CrearEgresoFacadeImpl implements CrearEgresoFacade {
         } catch(TransactionException exception){
             throw AplicationCustomException.createTechnicalException(exception,"Se produjo un error creando ");
         } catch(Exception e){
-            throw AplicationCustomException.createTechnicalException(e,"Ocurrio un error inesperado");
+            throw AplicationCustomException.createTechnicalException(e,"Ocurrio un error inesperado mm");
         }
-
     }
 }
