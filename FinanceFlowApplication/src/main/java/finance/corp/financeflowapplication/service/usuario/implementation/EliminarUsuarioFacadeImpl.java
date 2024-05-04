@@ -32,7 +32,6 @@ public class EliminarUsuarioFacadeImpl implements EliminarUsuarioFacade {
             throw aplicationCustomException;
         }catch (Exception e){
             throw AplicationCustomException.createTechnicalException(e, "ocurrio un error eliminando el usuario"+ e.getMessage());
-
         }
     }
 }

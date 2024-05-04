@@ -41,7 +41,7 @@ public class EditarEgresoFacadeImpl implements EditarEgresoFacade {
         }catch (AplicationCustomException e) {
             throw e;
         } catch (TransactionException e) {
-            throw AplicationCustomException.createTechnicalException(e, "Ocurrio un error en la transaccion.");
+            throw AplicationCustomException.createTechnicalException(e, "Ocurrio un error en la transaccion .");
         } catch (Exception e) {
             throw AplicationCustomException.createTechnicalException(e, "Ocurrio un error inesperado ejecutando la transaccion para modificar los datos del usuario.");
         }
