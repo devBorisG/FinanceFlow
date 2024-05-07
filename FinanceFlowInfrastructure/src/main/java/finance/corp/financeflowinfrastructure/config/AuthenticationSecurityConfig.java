@@ -27,7 +27,7 @@ public class AuthenticationSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> (UserDetails) usuarioRepository.findByCorreo(username)
+        return username -> usuarioRepository.findByCorreo(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
     }
 
