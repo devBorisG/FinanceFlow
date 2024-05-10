@@ -1,7 +1,7 @@
-package finance.corp.financeflowapplication.ingreso.implementation;
+package finance.corp.financeflowapplication.service.ingreso.implementation;
 
 import finance.corp.financeflowapplication.dto.ingreso.IngresoDTO;
-import finance.corp.financeflowapplication.ingreso.EliminarIngresoFacade;
+import finance.corp.financeflowapplication.service.ingreso.EliminarIngresoFacade;
 import finance.corp.financeflowdomain.domain.IngresoDomain;
 import finance.corp.financeflowdomain.port.input.ingreso.EliminarIngresoUseCase;
 import finance.corp.financeflowutils.mapper.MapperDTOToDomain;

@@ -3,7 +3,7 @@ package finance.corp.financeflowinfrastructure.adapter.primary.controller.ingres
 import finance.corp.financeflowapplication.dto.ingreso.IngresoDTO;
 import finance.corp.financeflowapplication.dto.ingreso.builder.IngresoDTOBuilder;
 import finance.corp.financeflowapplication.dto.usuario.builder.UsuarioDTOBuilder;
-import finance.corp.financeflowapplication.ingreso.ConsultarIngresoFacade;
+import finance.corp.financeflowapplication.service.ingreso.ConsultarIngresoFacade;
 import finance.corp.financeflowinfrastructure.adapter.primary.response.Response;
 import finance.corp.financeflowutils.exception.FinanceFlowCustomException;
 import org.springframework.http.HttpStatus;

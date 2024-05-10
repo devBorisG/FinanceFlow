@@ -1,9 +1,9 @@
-package finance.corp.financeflowapplication.ingreso.implementation;
+package finance.corp.financeflowapplication.service.ingreso.implementation;
 
 import finance.corp.financeflowapplication.dto.categoria.CategoriaDTO;
 import finance.corp.financeflowapplication.dto.ingreso.IngresoDTO;
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
-import finance.corp.financeflowapplication.ingreso.ConsultarIngresoFacade;
+import finance.corp.financeflowapplication.service.ingreso.ConsultarIngresoFacade;
 import finance.corp.financeflowdomain.domain.CategoriaDomain;
 import finance.corp.financeflowdomain.domain.IngresoDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
