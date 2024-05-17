@@ -1,12 +1,14 @@
 package finance.corp.financeflowdomain.repository.meta;
 
 import finance.corp.financeflowdomain.entity.MetaEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-@Repository
-public interface MetaRepository extends JpaRepository<MetaEntity, UUID> {
-    MetaEntity findByNombre(String nombre);
+public interface MetaRepository{
+    Optional<List<MetaEntity>> findByUsuarioId(UUID id);
+    void save(MetaEntity metaEntity);
+    boolean existsById(UUID id);
+    void delete(MetaEntity metaEntity);
 }
