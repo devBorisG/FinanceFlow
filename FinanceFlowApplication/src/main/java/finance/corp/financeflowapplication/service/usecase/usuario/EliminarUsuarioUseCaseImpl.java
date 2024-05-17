@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class EliminarUsuarioUseCaseImpl implements EliminarUsuarioUseCase {
+public class    EliminarUsuarioUseCaseImpl implements EliminarUsuarioUseCase {
 
     private final UsuarioRepository usuarioRepository;
     private final ConsultarUsuarioUseCase consultarUsuarioUseCase;

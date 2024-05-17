@@ -29,11 +29,8 @@ public class CrearEgresoValidatorImpl implements CrearEgresoValidator {
     @Override
     public void isValid(EgresoDTO dto) {
 
-        if (egresoRepository.existsById(dto.getId())){
-            throw AplicationCustomException.createUserException("Ocurrio un error, por favor intente nuevamente");
-        }
         if (isValidNumber(dto.getMonto())){
-            throw AplicationCustomException.createUserException("Nombres y apellidos solo pueden contener letras y espacios");
+            throw AplicationCustomException.createUserException("solo se permiten numeros "+dto.getMonto());
         }
         if (verifyMandatoryEgresoAttributes(dto)){
             throw AplicationCustomException.createUserException("El egrso no puede estar vacio");
@@ -51,8 +48,8 @@ public class CrearEgresoValidatorImpl implements CrearEgresoValidator {
         return matcher.matches();
     }
     private boolean verifyMandatoryEgresoAttributes(EgresoDTO egresoDTO) {
-        return isDefaultUUID(egresoDTO.getId()) || isEmpty(egresoDTO.getDescripcion()) || isEmpty(egresoDTO.getNombre()) ||
-                egresoDTO.getMonto()==0.0;
+        return isDefaultUUID(egresoDTO.getId()) || isEmpty(egresoDTO.getDescripcion()) || isEmpty(egresoDTO.getNombre());
+
     }
     private boolean verifyCategoria(EgresoDTO egresoDTO) {
         CategoriaDTO categoriaDTO = new CategoriaDTO();

@@ -32,13 +32,17 @@ public class EditarEgresoFacadeImpl implements EditarEgresoFacade {
 
     @Override
     public void execute(EgresoDTO dto) {
-        EgresoDomain egresoDomain = mapperDTOToDomain.mapToDomain(dto,EgresoDomain.class);
-        egresoDomain.setUsuario(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(),UsuarioDomain.class));
-        egresoDomain.setCategoria(mapperDTOToDomainCategoria.mapToDomain(dto.getCategoria(),CategoriaDomain.class));
-        try{
+        try {
+            EgresoDomain egresoDomain = mapperDTOToDomain.mapToDomain(dto, EgresoDomain.class);
+            egresoDomain.setUsuario(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(), UsuarioDomain.class));
+            CategoriaDomain categoriaDomain = mapperDTOToDomainCategoria.mapToDomain(dto.getCategoria(), CategoriaDomain.class);
+            categoriaDomain.setUsuarioDomain(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(), UsuarioDomain.class));
+            egresoDomain.setCategoria(categoriaDomain);
+
+            System.out.print("facaaaaaaa");
             useCase.execute(egresoDomain);
-            editarEgresoValidator.isValid(dto);
-        }catch (AplicationCustomException e) {
+            //editarEgresoValidator.isValid(dto);
+        } catch (AplicationCustomException e) {
             throw e;
         } catch (TransactionException e) {
             throw AplicationCustomException.createTechnicalException(e, "Ocurrio un error en la transaccion .");

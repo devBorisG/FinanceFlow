@@ -32,7 +32,11 @@ public class CrearEgresoUseCaseImpl implements CrearEgresoUseCase {
         try {
             EgresoEntity entity = mapperDomainToEntity.mapToEntity(domain, EgresoEntity.class);
             entity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(), UsuarioEntity.class));
-            entity.setCategoria(mapperDomainToEntityCategoria.mapToEntity(domain.getCategoria(), CategoriaEntity.class));
+            CategoriaEntity categoriaEntity = mapperDomainToEntityCategoria.mapToEntity(domain.getCategoria(), CategoriaEntity.class);
+            categoriaEntity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(), UsuarioEntity.class));
+            entity.setCategoria(categoriaEntity);
+
+            System.out.println("entity = " + entity);
             egresoRepository.save(entity);
         } catch (DataIntegrityViolationException e){
             throw DomainCustomException.createTechnicalException(e,"Se ha violado la integridad de los datos al intentar guardar el egreso.");

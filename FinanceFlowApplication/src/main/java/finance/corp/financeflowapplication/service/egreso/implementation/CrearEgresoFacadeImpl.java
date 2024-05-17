@@ -34,9 +34,12 @@ public class CrearEgresoFacadeImpl implements CrearEgresoFacade {
         try{
             EgresoDomain egresoDomain = mapperDTOToDomain.mapToDomain(dto, EgresoDomain.class);
             egresoDomain.setUsuario(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(),UsuarioDomain.class));
-            egresoDomain.setCategoria(mapperDTOToDomainCategoria.mapToDomain(dto.getCategoria(),CategoriaDomain.class));
+            CategoriaDomain categoriaDomain = mapperDTOToDomainCategoria.mapToDomain(dto.getCategoria(), CategoriaDomain.class);
+            categoriaDomain.setUsuarioDomain(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(), UsuarioDomain.class));
+            egresoDomain.setCategoria(categoriaDomain);
             crearEgresoUseCase.execute(egresoDomain);
-            crearEgresoValidator.isValid(dto);
+            System.out.println("egresoDomain = " + egresoDomain);
+            //crearEgresoValidator.isValid(dto);
 
         } catch(AplicationCustomException exception){
             throw exception;

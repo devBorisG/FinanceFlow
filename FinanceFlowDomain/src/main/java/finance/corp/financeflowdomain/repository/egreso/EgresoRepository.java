@@ -1,16 +1,16 @@
 package finance.corp.financeflowdomain.repository.egreso;
 
 import finance.corp.financeflowdomain.entity.EgresoEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
-@Repository
-public interface EgresoRepository extends JpaRepository<EgresoEntity, UUID> {
+public interface EgresoRepository  {
     Optional<List<EgresoEntity>> findByUsuarioId(UUID id);
+
+    void save(EgresoEntity egresoEntity);
+    boolean existsById(UUID id);
+    void delete(EgresoEntity egresoEntity);
 
 }

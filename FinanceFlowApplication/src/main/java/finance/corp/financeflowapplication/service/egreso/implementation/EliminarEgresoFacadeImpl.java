@@ -22,8 +22,7 @@ public class EliminarEgresoFacadeImpl implements EliminarEgresoFacade {
     @Override
     public void execute(EgresoDTO dto) {
         try{
-            EgresoDomain egresoDomain = mapperDTOToDomain.mapToDomain(dto, EgresoDomain.class);
-            eliminarEgresoUseCase.execute(egresoDomain);
+            eliminarEgresoUseCase.execute(mapperDTOToDomain.mapToDomain(dto, EgresoDomain.class));
         }catch (AplicationCustomException aplicationCustomException){
             throw aplicationCustomException;
         }catch (Exception e){

@@ -31,7 +31,11 @@ public class EditarEgresoUseCaseImpl implements EditarEgresoUseCase {
         try {
             EgresoEntity entity = mapperDomainToEntity.mapToEntity(domain,EgresoEntity.class);
             entity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(),UsuarioEntity.class));
-            entity.setCategoria(mapperDomainToEntityCategoria.mapToEntity(domain.getCategoria(),CategoriaEntity.class));
+            CategoriaEntity categoriaEntity = mapperDomainToEntityCategoria.mapToEntity(domain.getCategoria(), CategoriaEntity.class);
+            categoriaEntity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(), UsuarioEntity.class));
+            entity.setCategoria(categoriaEntity);
+
+            System.out.print("useeeeeeeeeeeeeeee");
             egresoRepository.save(entity);
         } catch(DataIntegrityViolationException exception){
             throw AplicationCustomException.createTechnicalException(exception,"Se ha violado la integridad de los datos");
