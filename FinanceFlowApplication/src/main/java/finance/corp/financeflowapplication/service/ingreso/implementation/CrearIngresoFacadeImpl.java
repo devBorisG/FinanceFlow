@@ -1,9 +1,9 @@
-package finance.corp.financeflowapplication.ingreso.implementation;
+package finance.corp.financeflowapplication.service.ingreso.implementation;
 
 import finance.corp.financeflowapplication.dto.categoria.CategoriaDTO;
 import finance.corp.financeflowapplication.dto.ingreso.IngresoDTO;
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
-import finance.corp.financeflowapplication.ingreso.CrearIngresoFacade;
+import finance.corp.financeflowapplication.service.ingreso.CrearIngresoFacade;
 import finance.corp.financeflowdomain.domain.CategoriaDomain;
 import finance.corp.financeflowdomain.domain.IngresoDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
@@ -31,9 +31,14 @@ public class CrearIngresoFacadeImpl implements CrearIngresoFacade {
     @Override
     public void execute(IngresoDTO dto) {
         try{
+            System.out.println("Entra en la fachada");
             IngresoDomain ingresoDomain = mapperDTOToDomain.mapToDomain(dto, IngresoDomain.class);
+            System.out.println("ingreso domain");
             ingresoDomain.setUsuario(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(),UsuarioDomain.class));
-            ingresoDomain.setCategoria(mapperDTOToDomainCategoria.mapToDomain(dto.getCategoria(),CategoriaDomain.class));
+            CategoriaDomain categoriaDomain = mapperDTOToDomainCategoria.mapToDomain(dto.getCategoria(),CategoriaDomain.class);
+            categoriaDomain.setUsuarioDomain(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(),UsuarioDomain.class));
+            ingresoDomain.setCategoria(categoriaDomain);
+            System.out.println(ingresoDomain);
             crearIngresoUseCase.execute(ingresoDomain);
         } catch(AplicationCustomException exception){
             throw exception;

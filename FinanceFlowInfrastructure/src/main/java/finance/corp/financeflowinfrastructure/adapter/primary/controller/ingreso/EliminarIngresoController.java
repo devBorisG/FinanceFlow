@@ -2,10 +2,9 @@ package finance.corp.financeflowinfrastructure.adapter.primary.controller.ingres
 
 import finance.corp.financeflowapplication.dto.ingreso.IngresoDTO;
 import finance.corp.financeflowapplication.dto.ingreso.builder.IngresoDTOBuilder;
-import finance.corp.financeflowapplication.ingreso.EliminarIngresoFacade;
+import finance.corp.financeflowapplication.service.ingreso.EliminarIngresoFacade;
 import finance.corp.financeflowinfrastructure.adapter.primary.response.Response;
 import finance.corp.financeflowutils.exception.FinanceFlowCustomException;
-import io.netty.handler.codec.http2.Http2SecurityUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
