@@ -32,8 +32,7 @@ public class AuthenticationJWTImpl implements AuthenticationJWT {
         } catch (Exception exception){
             throw AplicationCustomException.createTechnicalException(exception,"Ocurrio un error inesperado autenticando el usuario" + exception.getMessage());
         }
-        UsuarioEntity usuario = new UsuarioEntity();
-        BeanUtils.copyProperties(usuarioDTO,usuario);
+        UsuarioEntity usuario = mapperDTOToEntity.mapToEntity(usuarioDTO,UsuarioEntity.class);
         UsuarioEntity user = usuarioRepository.findByCorreo(usuario.getCorreo()).orElseThrow();
         return jwtService.generateToken(user);
     }

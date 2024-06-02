@@ -58,7 +58,7 @@ public class UsuarioEntity implements UserDetails {
     @JsonIgnore
     @Override
     public String getPassword() {
-        return null;
+        return contrasena;
     }
 
     @JsonProperty("contrasena")
@@ -69,31 +69,31 @@ public class UsuarioEntity implements UserDetails {
     @JsonIgnore
     @Override
     public String getUsername() {
-        return null;
+        return correo;
     }
 
     @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @JsonIgnore
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @JsonIgnore
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
