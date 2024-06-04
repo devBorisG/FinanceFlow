@@ -1,6 +1,5 @@
 package finance.corp.financeflowapplication.service.usecase.egreso;
 
-
 import finance.corp.financeflowdomain.domain.EgresoDomain;
 import finance.corp.financeflowdomain.entity.EgresoEntity;
 import finance.corp.financeflowdomain.port.input.egreso.EliminarEgresoUseCase;

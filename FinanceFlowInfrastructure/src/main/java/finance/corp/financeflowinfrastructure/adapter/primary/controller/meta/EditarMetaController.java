@@ -1,7 +1,8 @@
-package finance.corp.financeflowinfrastructure.adapter.primary.controller.egreso;
+package finance.corp.financeflowinfrastructure.adapter.primary.controller.meta;
 
-import finance.corp.financeflowapplication.dto.egreso.EgresoDTO;
-import finance.corp.financeflowapplication.service.egreso.EditarEgresoFacade;
+
+import finance.corp.financeflowapplication.dto.meta.MetaDTO;
+import finance.corp.financeflowapplication.service.meta.EditarMetaFacade;
 import finance.corp.financeflowinfrastructure.adapter.primary.response.Response;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
 import org.springframework.http.HttpStatus;
@@ -12,33 +13,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/finance-flow/v1/egreso")
-public class EditarEgresoController {
+@RequestMapping("/finance-flow/v1/meta")
+public class EditarMetaController {
+    private final EditarMetaFacade facade;
 
-    private final EditarEgresoFacade editarEgresoFacade;
-
-    public EditarEgresoController(EditarEgresoFacade editarEgresoFacade) {
-        this.editarEgresoFacade = editarEgresoFacade;
-
+    public EditarMetaController(EditarMetaFacade facade) {
+        this.facade = facade;
     }
     @PutMapping()
-    public ResponseEntity<Response<EgresoDTO>> execute(@RequestParam EgresoDTO dto){
-        final Response<EgresoDTO> response = new Response<>();
-        HttpStatus status = HttpStatus.OK;
+    public ResponseEntity<Response<MetaDTO>> execute(@RequestParam MetaDTO dto){
+        final Response<MetaDTO> response = new Response<>();
+        HttpStatus httpStatus = HttpStatus.OK;
+
         try {
-            editarEgresoFacade.execute(dto);
-            response.addSuccessMessage("Egreso modificado correctamente");
+            facade.execute(dto);
+            response.addSuccessMessage("meta modificado correctamente");
         } catch (final AplicationCustomException exception) {
-            status = HttpStatus.BAD_REQUEST;
+            httpStatus = HttpStatus.BAD_REQUEST;
             if (exception.isTechnicalException()) {
                 response.addErrorMessage("Ocurrio un error tecnico, intente nuevamente");
             } else {
                 response.addErrorMessage(exception.getMessage());
             }
         } catch (final Exception exception) {
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
             response.addFatalMessage("Ocurrio un error del servidor, intente nuevamente");
         }
-        return new ResponseEntity<>(response, status);
+        return new ResponseEntity<>(response, httpStatus);
     }
 }

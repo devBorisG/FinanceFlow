@@ -39,7 +39,7 @@ public class CrearEgresoFacadeImpl implements CrearEgresoFacade {
             egresoDomain.setCategoria(categoriaDomain);
             crearEgresoUseCase.execute(egresoDomain);
             System.out.println("egresoDomain = " + egresoDomain);
-            //crearEgresoValidator.isValid(dto);
+
 
         } catch(AplicationCustomException exception){
             throw exception;

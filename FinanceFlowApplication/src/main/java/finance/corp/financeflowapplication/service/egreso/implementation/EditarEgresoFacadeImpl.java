@@ -8,12 +8,14 @@ import finance.corp.financeflowapplication.validator.egreso.EditarEgresoValidato
 import finance.corp.financeflowdomain.domain.CategoriaDomain;
 import finance.corp.financeflowdomain.domain.EgresoDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
+import finance.corp.financeflowdomain.entity.CategoriaEntity;
 import finance.corp.financeflowdomain.port.input.egreso.EditarEgresoUseCase;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
+import finance.corp.financeflowutils.exception.domain.DomainCustomException;
 import finance.corp.financeflowutils.mapper.MapperDTOToDomain;
 import jakarta.transaction.Transactional;
-import org.hibernate.TransactionException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionException;
 
 @Transactional
 @Service
@@ -21,7 +23,6 @@ public class EditarEgresoFacadeImpl implements EditarEgresoFacade {
     MapperDTOToDomain<EgresoDTO, EgresoDomain> mapperDTOToDomain = new MapperDTOToDomain<>();
     MapperDTOToDomain<UsuarioDTO, UsuarioDomain> mapperDTOToDomainUsuario = new MapperDTOToDomain<>();
     MapperDTOToDomain<CategoriaDTO, CategoriaDomain> mapperDTOToDomainCategoria = new MapperDTOToDomain<>();
-
     private final EditarEgresoUseCase useCase;
     private final EditarEgresoValidator editarEgresoValidator;
 
@@ -34,20 +35,21 @@ public class EditarEgresoFacadeImpl implements EditarEgresoFacade {
     public void execute(EgresoDTO dto) {
         try {
             EgresoDomain egresoDomain = mapperDTOToDomain.mapToDomain(dto, EgresoDomain.class);
-            egresoDomain.setUsuario(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(), UsuarioDomain.class));
+            egresoDomain.setUsuario(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(),UsuarioDomain.class));
             CategoriaDomain categoriaDomain = mapperDTOToDomainCategoria.mapToDomain(dto.getCategoria(), CategoriaDomain.class);
             categoriaDomain.setUsuarioDomain(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(), UsuarioDomain.class));
             egresoDomain.setCategoria(categoriaDomain);
 
-            System.out.print("facaaaaaaa");
             useCase.execute(egresoDomain);
-            //editarEgresoValidator.isValid(dto);
-        } catch (AplicationCustomException e) {
-            throw e;
-        } catch (TransactionException e) {
-            throw AplicationCustomException.createTechnicalException(e, "Ocurrio un error en la transaccion .");
-        } catch (Exception e) {
-            throw AplicationCustomException.createTechnicalException(e, "Ocurrio un error inesperado ejecutando la transaccion para modificar los datos del usuario.");
+
+        } catch(AplicationCustomException exception){
+            throw exception;
+        } catch(DomainCustomException exception){
+            throw AplicationCustomException.createTechnicalException(exception,exception.getMessage());
+        } catch(TransactionException exception){
+            throw AplicationCustomException.createTechnicalException(exception,"Se produjo un error creando ");
+        } catch(Exception e){
+            throw AplicationCustomException.createTechnicalException(e,"Ocurrio un error inesperado mm");
         }
 
     }

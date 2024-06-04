@@ -22,6 +22,7 @@ public class EditarEgresoUseCaseImpl implements EditarEgresoUseCase {
     MapperDomainToEntity<EgresoDomain, EgresoEntity> mapperDomainToEntity = new MapperDomainToEntity<>();
     MapperDomainToEntity<UsuarioDomain, UsuarioEntity> mapperDomainToEntityUsuario = new MapperDomainToEntity<>();
     MapperDomainToEntity<CategoriaDomain, CategoriaEntity> mapperDomainToEntityCategoria = new MapperDomainToEntity<>();
+
     public EditarEgresoUseCaseImpl(EgresoRepository egresoRepository) {
         this.egresoRepository = egresoRepository;
     }
@@ -29,13 +30,13 @@ public class EditarEgresoUseCaseImpl implements EditarEgresoUseCase {
     @Override
     public void execute(EgresoDomain domain) {
         try {
-            EgresoEntity entity = mapperDomainToEntity.mapToEntity(domain,EgresoEntity.class);
-            entity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(),UsuarioEntity.class));
+            EgresoEntity entity = mapperDomainToEntity.mapToEntity(domain, EgresoEntity.class);
+            entity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(), UsuarioEntity.class));
             CategoriaEntity categoriaEntity = mapperDomainToEntityCategoria.mapToEntity(domain.getCategoria(), CategoriaEntity.class);
             categoriaEntity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(), UsuarioEntity.class));
             entity.setCategoria(categoriaEntity);
 
-            System.out.print("useeeeeeeeeeeeeeee");
+            System.out.println("entity = " + entity);
             egresoRepository.save(entity);
         } catch(DataIntegrityViolationException exception){
             throw AplicationCustomException.createTechnicalException(exception,"Se ha violado la integridad de los datos");
