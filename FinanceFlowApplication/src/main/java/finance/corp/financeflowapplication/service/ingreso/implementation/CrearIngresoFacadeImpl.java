@@ -31,14 +31,11 @@ public class CrearIngresoFacadeImpl implements CrearIngresoFacade {
     @Override
     public void execute(IngresoDTO dto) {
         try{
-            System.out.println("Entra en la fachada");
             IngresoDomain ingresoDomain = mapperDTOToDomain.mapToDomain(dto, IngresoDomain.class);
-            System.out.println("ingreso domain");
             ingresoDomain.setUsuario(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(),UsuarioDomain.class));
             CategoriaDomain categoriaDomain = mapperDTOToDomainCategoria.mapToDomain(dto.getCategoria(),CategoriaDomain.class);
             categoriaDomain.setUsuarioDomain(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(),UsuarioDomain.class));
             ingresoDomain.setCategoria(categoriaDomain);
-            System.out.println(ingresoDomain);
             crearIngresoUseCase.execute(ingresoDomain);
         } catch(AplicationCustomException exception){
             throw exception;
@@ -49,6 +46,5 @@ public class CrearIngresoFacadeImpl implements CrearIngresoFacade {
         } catch(Exception e){
             throw AplicationCustomException.createTechnicalException(e,"Ocurrio un error inesperado en la creación del ingreso");
         }
-
     }
 }
