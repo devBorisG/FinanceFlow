@@ -53,7 +53,7 @@ public class ModificarUsuarioValidatorImpl implements ModificarUsuarioValidator 
     }
 
     private boolean verifyMandatoryUserFields(UsuarioDTO dto) {
-        return isDefaultUUID(dto.getId()) || isEmpty(dto.getNombre()) || isEmpty(dto.getApellido()) ||
+        return  isEmpty(dto.getNombre()) || isEmpty(dto.getApellido()) ||
                 isEmpty(dto.getCorreo()) || isEmpty(dto.getContrasena());
     }
 

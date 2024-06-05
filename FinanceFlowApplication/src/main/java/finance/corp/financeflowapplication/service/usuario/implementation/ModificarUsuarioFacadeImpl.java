@@ -29,7 +29,7 @@ public class ModificarUsuarioFacadeImpl implements ModificarUsuarioFacade {
     public void execute(UsuarioDTO dto) {
         try {
             UsuarioDomain usuarioDomain = mapperDTOToDomain.mapToDomain(dto, UsuarioDomain.class);
-            modificarUsuarioValidator.isValid(dto);
+            //modificarUsuarioValidator.isValid(dto);
             modificarUsuarioUseCase.execute(usuarioDomain);
         } catch (AplicationCustomException e) {
             throw e;
