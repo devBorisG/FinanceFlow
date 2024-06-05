@@ -8,7 +8,6 @@ import finance.corp.financeflowapplication.validator.egreso.EditarEgresoValidato
 import finance.corp.financeflowdomain.domain.CategoriaDomain;
 import finance.corp.financeflowdomain.domain.EgresoDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
-import finance.corp.financeflowdomain.entity.CategoriaEntity;
 import finance.corp.financeflowdomain.port.input.egreso.EditarEgresoUseCase;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
 import finance.corp.financeflowutils.exception.domain.DomainCustomException;
@@ -34,13 +33,13 @@ public class EditarEgresoFacadeImpl implements EditarEgresoFacade {
     @Override
     public void execute(EgresoDTO dto) {
         try {
-            EgresoDomain egresoDomain = mapperDTOToDomain.mapToDomain(dto, EgresoDomain.class);
-            egresoDomain.setUsuario(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(),UsuarioDomain.class));
+            EgresoDomain egreso = mapperDTOToDomain.mapToDomain(dto, EgresoDomain.class);
+            egreso.setUsuario(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(),UsuarioDomain.class));
             CategoriaDomain categoriaDomain = mapperDTOToDomainCategoria.mapToDomain(dto.getCategoria(), CategoriaDomain.class);
             categoriaDomain.setUsuarioDomain(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(), UsuarioDomain.class));
-            egresoDomain.setCategoria(categoriaDomain);
+            egreso.setCategoria(categoriaDomain);
 
-            useCase.execute(egresoDomain);
+            useCase.execute(egreso);
 
         } catch(AplicationCustomException exception){
             throw exception;

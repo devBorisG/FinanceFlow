@@ -29,8 +29,9 @@ public class EditarMetaUseCaseImpl implements EditarMetaUseCase {
         try {
             MetaEntity entity = mapperDomainToEntity.mapToEntity(domain, MetaEntity.class);
             entity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(),UsuarioEntity.class));
-            System.out.println("entity = " + entity);
             metaRepository.save(entity);
+            System.out.println("entity = " + entity);
+
         }
         catch(DataIntegrityViolationException exception){
             throw AplicationCustomException.createTechnicalException(exception,"Se ha violado la integridad de los datos");

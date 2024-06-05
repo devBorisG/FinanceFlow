@@ -29,15 +29,16 @@ public class EditarEgresoUseCaseImpl implements EditarEgresoUseCase {
 
     @Override
     public void execute(EgresoDomain domain) {
-        try {
-            EgresoEntity entity = mapperDomainToEntity.mapToEntity(domain, EgresoEntity.class);
-            entity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(), UsuarioEntity.class));
-            CategoriaEntity categoriaEntity = mapperDomainToEntityCategoria.mapToEntity(domain.getCategoria(), CategoriaEntity.class);
-            categoriaEntity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(), UsuarioEntity.class));
-            entity.setCategoria(categoriaEntity);
+        EgresoEntity egresoEntity = mapperDomainToEntity.mapToEntity(domain, EgresoEntity.class);
+        egresoEntity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(), UsuarioEntity.class));
+        CategoriaEntity categoriaEntity = mapperDomainToEntityCategoria.mapToEntity(domain.getCategoria(), CategoriaEntity.class);
+        categoriaEntity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(), UsuarioEntity.class));
+        egresoEntity.setCategoria(categoriaEntity);
 
-            System.out.println("entity = " + entity);
-            egresoRepository.save(entity);
+        try {
+
+            System.out.println("entity = " + egresoEntity);
+            egresoRepository.save(egresoEntity);
         } catch(DataIntegrityViolationException exception){
             throw AplicationCustomException.createTechnicalException(exception,"Se ha violado la integridad de los datos");
         } catch(TransactionSystemException exception){

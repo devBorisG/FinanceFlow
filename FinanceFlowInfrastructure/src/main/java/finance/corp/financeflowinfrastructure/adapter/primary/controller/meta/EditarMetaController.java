@@ -7,10 +7,7 @@ import finance.corp.financeflowinfrastructure.adapter.primary.response.Response;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/finance-flow/v1/meta")
@@ -21,7 +18,7 @@ public class EditarMetaController {
         this.facade = facade;
     }
     @PutMapping()
-    public ResponseEntity<Response<MetaDTO>> execute(@RequestParam MetaDTO dto){
+    public ResponseEntity<Response<MetaDTO>> execute(@RequestBody MetaDTO dto){
         final Response<MetaDTO> response = new Response<>();
         HttpStatus httpStatus = HttpStatus.OK;
 

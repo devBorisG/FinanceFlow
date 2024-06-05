@@ -4,7 +4,7 @@ import finance.corp.financeflowapplication.dto.meta.MetaDTO;
 import finance.corp.financeflowapplication.dto.meta.builder.MetaDTOBuilder;
 import finance.corp.financeflowapplication.service.meta.EliminarMetaFacade;
 import finance.corp.financeflowinfrastructure.adapter.primary.response.Response;
-import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
+import finance.corp.financeflowutils.exception.FinanceFlowCustomException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,20 +25,23 @@ public class EliminarMetaController {
 
     @DeleteMapping()
     public ResponseEntity<Response<MetaDTO>> execute(@RequestParam UUID id) {
+        MetaDTO metaDto = MetaDTOBuilder
+                .getMetaDTOBuilder()
+                .setId(id)
+                .build();
         final Response<MetaDTO> response = new Response<>();
         HttpStatus httpStatus = HttpStatus.OK;
-        MetaDTO metaDto = MetaDTOBuilder.getMetaDTOBuilder().setId(id).build();
         try {
             facade.execute(metaDto);
             response.addSuccessMessage("Meta Eliminado correctamente");
-        }catch (final AplicationCustomException aplicationCustomException){
+        }catch (final FinanceFlowCustomException e){
             httpStatus = HttpStatus.BAD_REQUEST;
-            if (aplicationCustomException.isTechnicalException()) {
+            if (e.isTechnicalException()) {
                 response.addErrorMessage("Ocurrio un error eliminando, intente de nuevo");
             } else {
-                response.addErrorMessage(aplicationCustomException.getMessage());
+                response.addErrorMessage(e.getMessage());
             }
-        }catch (Exception e){
+        }catch ( final Exception e){
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
             response.addErrorMessage("Ocurrio un problema con el servidor, intente nuevamente");
         }

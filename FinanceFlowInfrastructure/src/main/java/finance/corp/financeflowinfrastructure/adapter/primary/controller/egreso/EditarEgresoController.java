@@ -6,10 +6,7 @@ import finance.corp.financeflowinfrastructure.adapter.primary.response.Response;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/finance-flow/v1/egreso")
@@ -22,7 +19,7 @@ public class EditarEgresoController {
 
     }
     @PutMapping()
-    public ResponseEntity<Response<EgresoDTO>> execute(@RequestParam EgresoDTO dto){
+    public ResponseEntity<Response<EgresoDTO>> execute(@RequestBody EgresoDTO dto){
         final Response<EgresoDTO> response = new Response<>();
         HttpStatus status = HttpStatus.OK;
         try {
