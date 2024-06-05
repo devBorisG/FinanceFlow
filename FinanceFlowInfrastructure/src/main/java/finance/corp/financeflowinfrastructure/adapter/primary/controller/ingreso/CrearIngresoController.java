@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import static finance.corp.financeflowutils.helper.UUIDHelper.getNewUUID;
 
 @RestController
@@ -30,7 +32,7 @@ public class CrearIngresoController {
         HttpStatus status = HttpStatus.OK;
         try{
             facade.execute(dto);
-            System.out.println("se ejecuta la fachada");
+            response.setData(List.of(dto));
             response.addSuccessMessage("Ingreso creado correctamente");
         } catch(final FinanceFlowCustomException exception){
             status = HttpStatus.BAD_REQUEST;

@@ -35,6 +35,6 @@ public class JpaIngresoRepositoryImpl implements IngresoRepository {
 
     @Override
     public void delete(IngresoEntity ingresoEntity) {
-        ingresoRepositoryAdapter.delete(ingresoEntity);
+        ingresoRepositoryAdapter.deleteById(ingresoEntity.getId());
     }
 }
