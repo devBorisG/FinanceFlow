@@ -1,5 +1,6 @@
 package finance.corp.financeflowapplication.service.usecase.categoria;
 
+
 import finance.corp.financeflowdomain.domain.CategoriaDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
 import finance.corp.financeflowdomain.repository.categoria.CategoriaRepository;
@@ -14,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaSystemException;
 
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -22,57 +24,53 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.doThrow;
 
 @ExtendWith(MockitoExtension.class)
-public class EditarCategoriaUseCaseImplTest {
-
+public class EliminarCategoriaUseCaseImplTest {
+    static final UUID id = UUID.randomUUID();
     UsuarioDomain usuario = new UsuarioDomain();
     CategoriaDomain categoriaDomain = new CategoriaDomain();
+
     @Mock
     CategoriaRepository repository;
 
     @InjectMocks
-    EditarCategoriaUseCaseImpl useCase;
+    EliminarCategoriaUseCaseImpl useCase;
 
     @BeforeEach
     void setUp() {
-
-        usuario.setId(null);
+        usuario.setId(id);
         usuario.setNombre("prueba");
         usuario.setApellido("prueba");
         usuario.setContrasena("prueba");
         usuario.setCorreo("prueba@prueba.com");
 
         categoriaDomain.setUsuarioDomain(usuario);
-        categoriaDomain.setId(null);
+        categoriaDomain.setId(id);
         categoriaDomain.setNombre("prueba");
         categoriaDomain.setDescripcion("prueba");
     }
 
     @Test
-    void EditarCategoria_exitoso() {
+    void EliminarCategoria_exitoso() {
         useCase.execute(categoriaDomain);
-
-        verify(repository, times(1)).save(any());
-        assertEquals("prueba", categoriaDomain.getNombre());
+        verify(repository, times(1)).delete(any());
+        assertEquals(id, categoriaDomain.getId());
     }
 
     @Test
-    void EditarCategoria_integridadDatosException() {
-        doThrow(DataIntegrityViolationException.class).when(repository).save(any());
-
+    void EliminarCategoria_integridadDatosException() {
+        doThrow(DataIntegrityViolationException.class).when(repository).delete(any());
         assertThrows(AplicationCustomException.class, () -> useCase.execute(categoriaDomain));
     }
 
     @Test
-    void EditarCategoria_transaccionException() {
-        doThrow(TransactionRequiredException.class).when(repository).save(any());
-
+    void EliminarCategoria_transaccionException() {
+        doThrow(TransactionRequiredException.class).when(repository).delete(any());
         assertThrows(AplicationCustomException.class, () -> useCase.execute(categoriaDomain));
     }
 
     @Test
-    void EditarCategoria_jpaException() {
-        doThrow(JpaSystemException.class).when(repository).save(any());
-
+    void EliminarCategoria_jpaException() {
+        doThrow(JpaSystemException.class).when(repository).delete(any());
         assertThrows(AplicationCustomException.class, () -> useCase.execute(categoriaDomain));
     }
 }
