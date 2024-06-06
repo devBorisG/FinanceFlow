@@ -5,8 +5,6 @@ import finance.corp.financeflowdomain.domain.UsuarioDomain;
 import finance.corp.financeflowdomain.entity.CategoriaEntity;
 import finance.corp.financeflowdomain.repository.categoria.CategoriaRepository;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
-import finance.corp.financeflowutils.mapper.MapperDomainToEntity;
-import finance.corp.financeflowutils.mapper.MapperEntityToDomain;
 import jakarta.persistence.TransactionRequiredException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
