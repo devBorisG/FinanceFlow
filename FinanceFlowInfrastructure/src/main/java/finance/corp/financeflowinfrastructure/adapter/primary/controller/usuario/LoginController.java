@@ -28,6 +28,7 @@ public class LoginController {
             response.addSuccessMessage("Bienvenido a FinanceFlow");
         } catch(Exception exception){
             httpStatus = HttpStatus.BAD_REQUEST;
+            System.out.println(exception.getMessage());
             response.addErrorMessage("Acceso no autorizado");
         }
         return new ResponseEntity<>(response,httpStatus);
