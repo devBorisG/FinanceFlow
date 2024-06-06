@@ -80,6 +80,9 @@ public class UsuarioDTO {
         return id;
     }
 
+    public UsuarioDTO(String id) {
+        this.id = UUID.fromString(id);
+    }
     /**
      * Setter for id.
      *

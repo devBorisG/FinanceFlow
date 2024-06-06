@@ -64,4 +64,5 @@ public class Response<T> {
     public void addSuccessMessage(final String content){
         getMessages().add(Message.createSuccessMessage(content));
     }
+
 }

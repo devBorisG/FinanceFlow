@@ -35,6 +35,6 @@ public class JpaMetaRepositoryImpl implements MetaRepository {
 
     @Override
     public void delete(MetaEntity metaEntity) {
-        metaRepositoryAdapter.delete(metaEntity);
+        metaRepositoryAdapter.deleteById(metaEntity.getId());
     }
 }

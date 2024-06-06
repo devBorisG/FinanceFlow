@@ -32,7 +32,7 @@ public class ConsultarUsuarioController {
         try{
             List<UsuarioDTO> data = facade.execute(existDto);
             response.addSuccessMessage("Lista de usuarios encontrada");
-            response.setData(data);
+                response.setData(data);
         }catch(final FinanceFlowCustomException financeFlowCustomException){
             httpStatus = HttpStatus.BAD_REQUEST;
             if(financeFlowCustomException.isTechnicalException()){

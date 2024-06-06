@@ -30,6 +30,7 @@ public class CrearUsuarioFacadeImpl implements CrearUsuarioFacade {
             validator.isValid(dto);
             UsuarioDomain usuarioDomain = mapperDTOToDomain.mapToDomain(dto, UsuarioDomain.class);
             useCase.execute(usuarioDomain);
+            System.out.println("usuarioDomain = " + usuarioDomain);
         } catch (AplicationCustomException e) {
             throw e;
         }   catch (DomainCustomException e){

@@ -31,6 +31,7 @@ public class CrearMetaUseCaseImpl implements CrearMetaUseCase {
             MetaEntity entity = mapperDomainToEntity.mapToEntity(domain,MetaEntity.class);
             entity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(), UsuarioEntity.class));
             metaRepository.save(entity);
+            System.out.println("entity = " + entity);
         } catch(DataIntegrityViolationException exception){
             throw AplicationCustomException.createTechnicalException(exception,"No cumple con la integridad de los datos");
         } catch(TransactionSystemException exception){

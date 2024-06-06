@@ -30,6 +30,7 @@ public class CrearUsuarioUseCaseImpl implements CrearUsuarioUseCase {
             domain.setContrasena(passwordEncoder.encode(domain.getContrasena()));
             UsuarioEntity entity = mapperDomainToEntity.mapToEntity(domain, UsuarioEntity.class);
             usuarioRepository.save(entity);
+            System.out.println("entity = " + entity);
         }catch (IllegalArgumentException e) {
             throw DomainCustomException.createUserException("La contraseña es demasiado larga. La longitud máxima es de 72 caracteres.");
         } catch (DataIntegrityViolationException e){

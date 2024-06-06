@@ -31,6 +31,7 @@ public class CrearMetaFacadeImpl implements CrearMetaFacade {
             MetaDomain metaDomain = mapperDTOToDomain.mapToDomain(dto,MetaDomain.class);
             metaDomain.setUsuario(mapperDTOToDomainUsuario.mapToDomain(dto.getUsuario(),UsuarioDomain.class));
             crearMetaUseCase.execute(metaDomain);
+            System.out.println("metaDomain = " + metaDomain);
         }catch(AplicationCustomException exception){
             throw exception;
         } catch(DomainCustomException exception){

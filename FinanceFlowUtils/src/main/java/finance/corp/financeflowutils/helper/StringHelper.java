@@ -2,7 +2,6 @@ package finance.corp.financeflowutils.helper;
 
 import java.util.Objects;
 
-import static finance.corp.financeflowutils.constant.Constants.EMPTY_STRING;
 import static finance.corp.financeflowutils.helper.ObjectHelper.getDefaultIfNull;
 
 /**
@@ -10,6 +9,7 @@ import static finance.corp.financeflowutils.helper.ObjectHelper.getDefaultIfNull
  * This class provides static methods to handle null strings and to perform common string operations.
  */
 public class StringHelper {
+    public static final String EMPTY = "";
 
     /**
      * Private constructor to prevent instantiation of utility class.
@@ -17,7 +17,6 @@ public class StringHelper {
     private StringHelper() {
         super();
     }
-
     /**
      * Returns the string if it is not null, otherwise returns the default value.
      *
@@ -36,7 +35,7 @@ public class StringHelper {
      * @return the string if it is not null, otherwise an empty string
      */
     public static String getDefaultString(final String string) {
-        return getDefaultIfNull(string, EMPTY_STRING);
+        return getDefaultIfNull(string, EMPTY);
     }
 
     /**
@@ -57,6 +56,6 @@ public class StringHelper {
      * @return true if the string is equal to an empty string, false otherwise
      */
     public static boolean isEmpty(final String string) {
-        return Objects.equals(string, EMPTY_STRING);
+        return Objects.equals(string, EMPTY);
     }
 }

@@ -9,7 +9,6 @@ import finance.corp.financeflowdomain.entity.UsuarioEntity;
 import finance.corp.financeflowdomain.port.input.ingreso.EditarIngresoUseCase;
 import finance.corp.financeflowdomain.repository.ingreso.IngresoRepository;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
-import finance.corp.financeflowutils.mapper.MapperDomainToDTO;
 import finance.corp.financeflowutils.mapper.MapperDomainToEntity;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaSystemException;
