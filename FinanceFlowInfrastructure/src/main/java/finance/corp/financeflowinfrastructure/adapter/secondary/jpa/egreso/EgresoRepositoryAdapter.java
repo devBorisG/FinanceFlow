@@ -1,4 +1,4 @@
-package finance.corp.financeflowinfrastructure.adapter.secondary.egreso;
+package finance.corp.financeflowinfrastructure.adapter.secondary.jpa.egreso;
 
 import finance.corp.financeflowdomain.entity.EgresoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

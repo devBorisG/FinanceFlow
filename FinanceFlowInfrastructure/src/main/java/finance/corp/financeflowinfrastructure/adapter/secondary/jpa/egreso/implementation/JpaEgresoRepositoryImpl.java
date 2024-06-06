@@ -1,8 +1,8 @@
-package finance.corp.financeflowinfrastructure.adapter.secondary.egreso.implementation;
+package finance.corp.financeflowinfrastructure.adapter.secondary.jpa.egreso.implementation;
 
 import finance.corp.financeflowdomain.entity.EgresoEntity;
 import finance.corp.financeflowdomain.repository.egreso.EgresoRepository;
-import finance.corp.financeflowinfrastructure.adapter.secondary.egreso.EgresoRepositoryAdapter;
+import finance.corp.financeflowinfrastructure.adapter.secondary.jpa.egreso.EgresoRepositoryAdapter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +35,6 @@ public class JpaEgresoRepositoryImpl implements EgresoRepository {
 
     @Override
     public void delete(EgresoEntity egresoEntity) {
-        egresoRepositoryAdapter.delete(egresoEntity);
+        egresoRepositoryAdapter.deleteById(egresoEntity.getId());
     }
 }
