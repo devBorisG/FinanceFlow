@@ -33,17 +33,12 @@ public class CrearIngresoUseCaseImpl implements CrearIngresoUseCase {
     @Override
     public void execute(IngresoDomain domain) {
         try{
-            System.out.println("Entra en el caso de uso");
             IngresoEntity entity = mapperDomainToEntity.mapToEntity(domain,IngresoEntity.class);
-            System.out.println("Entity");
             entity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(),UsuarioEntity.class));
-            System.out.println("Usuario");
             CategoriaEntity categoriaEntity = mapperDomainToEntityCategoria.mapToEntity(domain.getCategoria(),CategoriaEntity.class);
             categoriaEntity.setUsuario(mapperDomainToEntityUsuario.mapToEntity(domain.getUsuario(), UsuarioEntity.class));
             entity.setCategoria(categoriaEntity);
-            System.out.println("Categoria " + entity);
             ingresoRepository.save(entity);
-            System.out.println("Entidad guardada");
         } catch(DataIntegrityViolationException exception){
             throw AplicationCustomException.createTechnicalException(exception,"No cumple con la integridad de los datos");
         } catch(TransactionSystemException exception){
