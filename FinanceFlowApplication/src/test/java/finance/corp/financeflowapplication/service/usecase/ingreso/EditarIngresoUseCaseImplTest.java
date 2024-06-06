@@ -15,7 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaSystemException;
 
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -24,9 +23,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.doThrow;
 
 @ExtendWith(MockitoExtension.class)
-
 public class EditarIngresoUseCaseImplTest {
-    static final UUID id = UUID.randomUUID();
     UsuarioDomain usuarioDomain = new UsuarioDomain();
     CategoriaDomain categoriaDomain = new CategoriaDomain();
     IngresoDomain ingresoDomain = new IngresoDomain();

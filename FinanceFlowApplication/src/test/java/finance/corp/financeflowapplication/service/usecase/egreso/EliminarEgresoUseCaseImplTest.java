@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaSystemException;
 
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -22,7 +23,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.doThrow;
 @ExtendWith(MockitoExtension.class)
-public class EditarEgresoUseCaseImplTest {
+
+public class EliminarEgresoUseCaseImplTest {
+    static final UUID id = UUID.randomUUID();
     UsuarioDomain usuario = new UsuarioDomain();
     CategoriaDomain categoriaDomain = new CategoriaDomain();
     EgresoDomain egresoDomain = new EgresoDomain();
@@ -31,24 +34,24 @@ public class EditarEgresoUseCaseImplTest {
     private EgresoRepository egresoRepository;
 
     @InjectMocks
-    private EditarEgresoUseCaseImpl useCase;
+    private EliminarEgresoUseCaseImpl useCase;
 
     @BeforeEach
     void setUp() {
-        usuario.setId(null);
+        usuario.setId(id);
         usuario.setNombre("prueba");
         usuario.setApellido("prueba");
         usuario.setContrasena("prueba");
         usuario.setCorreo("prueba@prueba.com");
 
         categoriaDomain.setUsuarioDomain(usuario);
-        categoriaDomain.setId(null);
+        categoriaDomain.setId(id);
         categoriaDomain.setNombre("prueba");
         categoriaDomain.setDescripcion("prueba");
 
         egresoDomain.setCategoria(categoriaDomain);
         egresoDomain.setUsuario(usuario);
-        egresoDomain.setId(null);
+        egresoDomain.setId(id);
         egresoDomain.setNombre("prueba");
         egresoDomain.setDescripcion("prueba");
         egresoDomain.setMonto(12323);
@@ -56,27 +59,27 @@ public class EditarEgresoUseCaseImplTest {
     }
 
     @Test
-    void EditarEgreso_exitoso() {
+    void EliminarEgreso_exitoso() {
         useCase.execute(egresoDomain);
-        verify(egresoRepository, times(1)).save(any());
-        assertEquals("prueba", egresoDomain.getNombre());
+        verify(egresoRepository, times(1)).delete(any());
+        assertEquals(id, egresoDomain.getId());
     }
 
     @Test
-    void EditarEgresoIntegridadDatos(){
-        doThrow(DataIntegrityViolationException.class).when(egresoRepository).save(any());
+    void EliminarEgresoIntegridadDatos(){
+        doThrow(DataIntegrityViolationException.class).when(egresoRepository).delete(any());
         assertThrows(AplicationCustomException.class,()->useCase.execute(egresoDomain));
     }
 
     @Test
-    void EditarEgresoTransaccionException(){
-        doThrow(TransactionRequiredException.class).when(egresoRepository).save(any());
+    void EliminarEgresoTransaccionException(){
+        doThrow(TransactionRequiredException.class).when(egresoRepository).delete(any());
         assertThrows(AplicationCustomException.class, () -> useCase.execute(egresoDomain));
     }
 
     @Test
-    void EditarEgresoJpaException(){
-        doThrow(JpaSystemException.class).when(egresoRepository).save(any());
+    void EliminarEgresoJpaException(){
+        doThrow(JpaSystemException.class).when(egresoRepository).delete(any());
         assertThrows(AplicationCustomException.class,()->useCase.execute(egresoDomain));
     }
 }

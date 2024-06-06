@@ -2,7 +2,6 @@ package finance.corp.financeflowapplication.service.usecase.egreso;
 
 import finance.corp.financeflowdomain.domain.CategoriaDomain;
 import finance.corp.financeflowdomain.domain.EgresoDomain;
-import finance.corp.financeflowdomain.domain.MetaDomain;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
 import finance.corp.financeflowdomain.repository.egreso.EgresoRepository;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
