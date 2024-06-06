@@ -8,6 +8,7 @@ import finance.corp.financeflowdomain.entity.EgresoEntity;
 import finance.corp.financeflowdomain.entity.UsuarioEntity;
 import finance.corp.financeflowdomain.port.input.egreso.CrearEgresoUseCase;
 import finance.corp.financeflowdomain.repository.egreso.EgresoRepository;
+import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
 import finance.corp.financeflowutils.exception.domain.DomainCustomException;
 import finance.corp.financeflowutils.mapper.MapperDomainToEntity;
 import jakarta.persistence.TransactionRequiredException;
@@ -38,16 +39,16 @@ public class CrearEgresoUseCaseImpl implements CrearEgresoUseCase {
 
             System.out.println("entity = " + entity);
             egresoRepository.save(entity);
-        } catch (DataIntegrityViolationException e){
-            throw DomainCustomException.createTechnicalException(e,"Se ha violado la integridad de los datos al intentar guardar el egreso.");
-        }catch (TransactionSystemException e){
-            throw DomainCustomException.createTechnicalException(e,"Hubo un problema con la transacción de la base de datos mientras se intentaba guardar la entidad.");
-        }catch (TransactionRequiredException e){
-            throw DomainCustomException.createTechnicalException(e,"Se requiere una transacción para esta operación.");
-        }catch (JpaSystemException e){
-            throw DomainCustomException.createTechnicalException(e,"Se genero un error en la capa de persistencia JPA.");
-        }catch (Exception e){
-            throw DomainCustomException.createTechnicalException(e,"Ocurrio un error inesperado.");
+        } catch(DataIntegrityViolationException exception){
+            throw AplicationCustomException.createTechnicalException(exception,"No cumple con la integridad de los datos");
+        } catch(TransactionSystemException exception){
+            throw AplicationCustomException.createTechnicalException(exception,"Hubo un problema con la transacción en la base de datos");
+        } catch(TransactionRequiredException exception){
+            throw AplicationCustomException.createTechnicalException(exception,"Se requiere una transacción para esta operación");
+        } catch(JpaSystemException exception){
+            throw AplicationCustomException.createTechnicalException(exception,"Se genero un error en la capa de persistencia JPA.");
+        } catch(Exception exception){
+            throw AplicationCustomException.createTechnicalException(exception,"Ocurrio un error inesperado");
         }
     }
 }
