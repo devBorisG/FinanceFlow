@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ConsultarUsuarioUseCaseImpl implements ConsultarUsuarioUseCase {
+public class ConsultarPersonasUseCaseImpl implements ConsultarUsuarioUseCase {
 
     private final UsuarioRepository usuarioRepository;
 
-    public ConsultarUsuarioUseCaseImpl(UsuarioRepository usuarioRepository) {
+    public ConsultarPersonasUseCaseImpl(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
 
