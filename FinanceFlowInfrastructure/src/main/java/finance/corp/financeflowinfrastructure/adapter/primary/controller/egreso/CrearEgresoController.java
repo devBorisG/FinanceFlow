@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import static finance.corp.financeflowutils.helper.UUIDHelper.getNewUUID;
 
 @RestController
@@ -28,6 +30,7 @@ public class CrearEgresoController {
         HttpStatus status = HttpStatus.OK;
         try {
             crearEgresoFacade.execute(dto);
+            response.setData(List.of(dto));
             response.addSuccessMessage("has registrado el egreso con exito");
         }catch (final FinanceFlowCustomException e){
             status = HttpStatus.BAD_REQUEST;
