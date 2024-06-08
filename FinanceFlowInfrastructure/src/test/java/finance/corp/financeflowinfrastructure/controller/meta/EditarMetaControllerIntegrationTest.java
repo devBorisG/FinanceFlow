@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import finance.corp.financeflowapplication.dto.meta.MetaDTO;
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
-import finance.corp.financeflowapplication.service.meta.CrearMetaFacade;
-import finance.corp.financeflowinfrastructure.adapter.primary.controller.meta.CrearMetaController;
+import finance.corp.financeflowapplication.service.meta.EditarMetaFacade;
+import finance.corp.financeflowinfrastructure.adapter.primary.controller.meta.EditarMetaController;
 import finance.corp.financeflowinfrastructure.init.FinanceFlowInfrastructureApplication;
 import finance.corp.financeflowutils.exception.FinanceFlowCustomException;
 import finance.corp.financeflowutils.exception.enumeration.LayerException;
@@ -27,25 +27,25 @@ import java.util.Map;
 import java.util.UUID;
 
 import static org.mockito.Mockito.doThrow;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = FinanceFlowInfrastructureApplication.class)
 @AutoConfigureMockMvc
-public class CrearMetaControllerIntegrationTest {
+public class EditarMetaControllerIntegrationTest {
     @MockBean
-    private CrearMetaFacade facade;
-
+    private EditarMetaFacade facade;
 
     @Autowired
     private MockMvc mockMvc;
 
     ObjectMapper objectMapper;
-     UUID userId;
+    UUID userId;
     @BeforeEach
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(new CrearMetaController(facade)).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(new EditarMetaController(facade)).build();
         userId = UUID.randomUUID();
 
         objectMapper = new ObjectMapper();
@@ -53,7 +53,7 @@ public class CrearMetaControllerIntegrationTest {
     }
 
     @Test
-    void CrearMetaTest_Success() throws Exception {
+    void EditarMetaTest_Success() throws Exception {
         UUID id = UUID.randomUUID();
         UsuarioDTO usuario = new UsuarioDTO();
         usuario.setId(id);
@@ -74,14 +74,14 @@ public class CrearMetaControllerIntegrationTest {
         System.out.println(objectMapper.writeValueAsString(metaDTO));
         Map<String, Object> respuests = new HashMap<>();
         System.out.println(objectMapper.writeValueAsString(respuests));
-        mockMvc.perform(post("/finance-flow/v1/meta")
+        mockMvc.perform(put("/finance-flow/v1/meta")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(metaDTO)))
                 .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(respuests)));;
     }
     @Test
-    void CrearMetaTest_BadRequest() throws Exception {
+    void EditarMetaTest_BadRequest() throws Exception {
         UUID id = UUID.randomUUID();
         String metaJson = "{ \"nombre\": \"Nueva Categoria\", \"descripcion\": \"Descripción de la categoría\", \"fechaInicio\": \"2024-06-07T12:00:00\", \"fechaFin\": \"2024-06-30T12:00:00\", \"monto\": 1000.0, \"usuario\": { \"id\": id, \"nombre\": \"Nombre del usuario\", \"email\": \"email@example.com\" } }";
         UsuarioDTO usuario = new UsuarioDTO();
@@ -101,7 +101,7 @@ public class CrearMetaControllerIntegrationTest {
         doThrow(new FinanceFlowCustomException(null, "Technical message", "Nombre de categoria ya existe", LayerException.CONTROLLER))
                 .when(facade).execute(metaDTO);
 
-        mockMvc.perform(post("/finance-flow/v1/meta")
+        mockMvc.perform(put("/finance-flow/v1/meta")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(metaJson))
                 .andExpect(status().isBadRequest());

@@ -1,8 +1,9 @@
-package finance.corp.financeflowinfrastructure.controller.usuario;
+package finance.corp.financeflowinfrastructure.controller.egreso;
 
-import finance.corp.financeflowapplication.service.usuario.EliminarUsuarioFacade;
-import finance.corp.financeflowinfrastructure.adapter.primary.controller.usuario.EliminarUsuarioController;
+import finance.corp.financeflowapplication.service.egreso.EliminarEgresoFacade;
+import finance.corp.financeflowinfrastructure.adapter.primary.controller.egreso.EliminarEgresoController;
 import finance.corp.financeflowinfrastructure.init.FinanceFlowInfrastructureApplication;
+import jakarta.ws.rs.core.MediaType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -23,23 +23,29 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = FinanceFlowInfrastructureApplication.class)
 @AutoConfigureMockMvc
-class EliminarUsuarioControllerIntegrationTest {
+public class EliminarEgresoControllerIntegrationTest {
+
+        @Autowired
+        private MockMvc mockMvc;
 
 
-    @Autowired
-    private MockMvc mockMvc;
-    @MockBean
-    private EliminarUsuarioFacade facade;
+        @MockBean
+        private EliminarEgresoFacade facade;
 
-    @BeforeEach
-    public void setUp(){
-        mockMvc = MockMvcBuilders.standaloneSetup(new EliminarUsuarioController(facade)).build();
-    }
+        @BeforeEach
+        public void setUp() {
 
-    @Test
-    public void eliminarUsuarioTestSuccess() throws Exception{
-        UUID id = UUID.randomUUID();
-        mockMvc.perform(delete("/finance-flow/v1/usuario").param("id",id.toString()).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-    }
+            mockMvc = MockMvcBuilders.standaloneSetup(new EliminarEgresoController(facade)).build();
+        }
 
+        @Test
+        public void eliminarEgresoTest_Success() throws Exception {
+            //
+            UUID id = UUID.randomUUID();
+
+            mockMvc.perform(delete("/finance-flow/v1/egreso")
+                            .param("id", id.toString())
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk());
+        }
 }

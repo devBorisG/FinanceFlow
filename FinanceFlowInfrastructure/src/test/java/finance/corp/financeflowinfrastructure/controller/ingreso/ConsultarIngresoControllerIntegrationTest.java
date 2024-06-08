@@ -1,9 +1,9 @@
-package finance.corp.financeflowinfrastructure.controller.categoria;
+package finance.corp.financeflowinfrastructure.controller.ingreso;
 
-
-
-import finance.corp.financeflowapplication.service.categoria.EliminarCategoriaFacade;
-import finance.corp.financeflowinfrastructure.adapter.primary.controller.categoria.EliminarCategoriaController;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import finance.corp.financeflowapplication.dto.ingreso.IngresoDTO;
+import finance.corp.financeflowapplication.service.ingreso.ConsultarIngresoFacade;
+import finance.corp.financeflowinfrastructure.adapter.primary.controller.ingreso.ConsultarIngresoController;
 import finance.corp.financeflowinfrastructure.init.FinanceFlowInfrastructureApplication;
 import jakarta.ws.rs.core.MediaType;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,40 +17,45 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = FinanceFlowInfrastructureApplication.class)
 @AutoConfigureMockMvc
-public class EliminarCategoriaControllerIntegrateTest {
-
-
-
+public class ConsultarIngresoControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
 
     @MockBean
-    private EliminarCategoriaFacade facade;
+    private ConsultarIngresoFacade facade;
+
+    ObjectMapper objectMapper;
 
     @BeforeEach
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(new EliminarCategoriaController(facade)).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(new ConsultarIngresoController(facade)).build();
+        objectMapper = new ObjectMapper();
     }
-
     @Test
-    public void eliminarCategoriaTest_Success() throws Exception {
-        // Arrange
+    public void ConsultarIngreso_Success() throws Exception {
         UUID id = UUID.randomUUID();
+        IngresoDTO ingresoDTO = new IngresoDTO();
 
-        // Act & Assert
-        mockMvc.perform(delete("/finance-flow/v1/categoria")
+        List<IngresoDTO> ingresoDTOList = Collections.singletonList(ingresoDTO);
+
+        when(facade.execute(Optional.of(ingresoDTO))).thenReturn(ingresoDTOList);
+
+        mockMvc.perform(get("/finance-flow/v1/ingreso")
                         .param("id", id.toString())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
-
 }

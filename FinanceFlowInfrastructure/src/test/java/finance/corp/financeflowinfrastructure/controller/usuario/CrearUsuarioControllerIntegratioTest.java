@@ -1,9 +1,7 @@
 package finance.corp.financeflowinfrastructure.controller.usuario;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import finance.corp.financeflowapplication.dto.meta.MetaDTO;
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
-import finance.corp.financeflowapplication.service.meta.CrearMetaFacade;
 import finance.corp.financeflowapplication.service.usuario.CrearUsuarioFacade;
 import finance.corp.financeflowinfrastructure.init.FinanceFlowInfrastructureApplication;
 import finance.corp.financeflowutils.exception.FinanceFlowCustomException;
@@ -78,8 +76,6 @@ public class CrearUsuarioControllerIntegratioTest {
         usuario.setApellido("prueba");
         usuario.setContrasena("prueba");
         usuario.setCorreo("prueba@prueba.com");
-
-       ;
 
         doThrow(new FinanceFlowCustomException(null, "Technical message", "Nombre de categoria ya existe", LayerException.CONTROLLER))
                 .when(facade).execute(usuario);

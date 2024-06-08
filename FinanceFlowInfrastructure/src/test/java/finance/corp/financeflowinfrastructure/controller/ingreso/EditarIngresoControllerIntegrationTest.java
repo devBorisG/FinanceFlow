@@ -5,6 +5,7 @@ import finance.corp.financeflowapplication.dto.categoria.CategoriaDTO;
 import finance.corp.financeflowapplication.dto.ingreso.IngresoDTO;
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
 import finance.corp.financeflowapplication.service.ingreso.implementation.EditarIngresoFacadeImpl;
+import finance.corp.financeflowinfrastructure.adapter.primary.controller.ingreso.EditarIngresoController;
 import finance.corp.financeflowinfrastructure.init.FinanceFlowInfrastructureApplication;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,13 +18,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,8 +33,6 @@ class EditarIngresoControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
-    @Autowired
-    private WebApplicationContext webApplicationContext;
     @MockBean
     private EditarIngresoFacadeImpl facade;
     @Autowired
@@ -44,7 +41,7 @@ class EditarIngresoControllerIntegrationTest {
 
     @BeforeEach
     public void setUp(){
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(new EditarIngresoController(facade)).build();
         objectMapper = new ObjectMapper();
         userId = UUID.randomUUID();
     }
