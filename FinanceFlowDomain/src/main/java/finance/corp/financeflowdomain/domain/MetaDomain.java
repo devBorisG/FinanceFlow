@@ -3,6 +3,7 @@ package finance.corp.financeflowdomain.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -12,8 +13,8 @@ public class MetaDomain {
     private UUID id;
     private String nombre;
     private String descripcion;
-    private Date fechaInicio;
-    private Date fechaFin;
+    private LocalDateTime fechaInicio;
+    private LocalDateTime fechaFin;
     private double monto;
     private UsuarioDomain usuario;
 }
