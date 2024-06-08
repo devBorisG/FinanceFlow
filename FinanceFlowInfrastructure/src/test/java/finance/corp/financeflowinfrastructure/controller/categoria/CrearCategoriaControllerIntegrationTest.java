@@ -70,7 +70,8 @@ public class CrearCategoriaControllerIntegrationTest {
         mockMvc.perform(post("/finance-flow/v1/categoria")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(categoriaJson))
-                .andExpect(status().isOk());}
+                .andExpect(status().isOk());
+    }
 
     @Test
     void CrearCategoriaTest_BadRequest() throws Exception {
