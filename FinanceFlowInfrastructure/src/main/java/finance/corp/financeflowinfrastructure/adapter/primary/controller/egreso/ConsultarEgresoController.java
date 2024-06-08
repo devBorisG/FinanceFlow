@@ -2,6 +2,7 @@ package finance.corp.financeflowinfrastructure.adapter.primary.controller.egreso
 
 import finance.corp.financeflowapplication.dto.egreso.EgresoDTO;
 import finance.corp.financeflowapplication.dto.egreso.builder.EgresoDTOBuilder;
+import finance.corp.financeflowapplication.dto.usuario.builder.UsuarioDTOBuilder;
 import finance.corp.financeflowapplication.service.egreso.ConsultarEgresoFacade;
 import finance.corp.financeflowinfrastructure.adapter.primary.response.Response;
 import finance.corp.financeflowutils.exception.aplication.AplicationCustomException;
@@ -30,7 +31,9 @@ public class ConsultarEgresoController {
     public ResponseEntity<Response<EgresoDTO>> execute(@RequestParam UUID id) {
         final Response<EgresoDTO> response = new Response<>();
         HttpStatus httpStatus = HttpStatus.OK;
-        EgresoDTO egresoDTO = EgresoDTOBuilder.getEgresoDTOBuilder().setId(id).build();
+        EgresoDTO egresoDTO = EgresoDTOBuilder.getEgresoDTOBuilder().setUsuario(UsuarioDTOBuilder.getUsuarioDTOBuilder().setId(id)
+                .build())
+                .build();
         try {
             List<EgresoDTO> listegresos = consultarEgresoFacade.execute(Optional.of(egresoDTO));
             response.setData(listegresos);
