@@ -28,6 +28,7 @@ public class CrearCategoriaController {
         HttpStatus status = HttpStatus.OK;
         try{
             facade.execute(dto);
+            response.setData(List.of(dto));
             response.addSuccessMessage("Categoria creada correctamente");
         }catch (final FinanceFlowCustomException e){
             status = HttpStatus.BAD_REQUEST;
