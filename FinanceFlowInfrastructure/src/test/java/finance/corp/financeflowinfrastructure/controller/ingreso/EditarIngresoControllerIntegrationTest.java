@@ -74,7 +74,9 @@ class EditarIngresoControllerIntegrationTest {
         System.out.println(objectMapper.writeValueAsString(usuarioDTO));
         Map<String,Object> respuestas = new HashMap<>();
         System.out.println(objectMapper.writeValueAsString(respuestas));
-        mockMvc.perform(put("/finance-flow/v1/ingreso").param("id",userId.toString()).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(ingresoDTO)))
+        mockMvc.perform(put("/finance-flow/v1/ingreso").param("id",userId.toString())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(ingresoDTO)))
                 .andExpect(status().isOk());
     }
 

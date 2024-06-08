@@ -38,7 +38,8 @@ class EliminarIngresoControllerIntegrateTest {
     @Test
     public void eliminarIngresoTestSuccess() throws Exception{
         UUID id = UUID.randomUUID();
-        mockMvc.perform(delete("/finance-flow/v1/ingreso").param("id",id.toString()).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+        mockMvc.perform(delete("/finance-flow/v1/ingreso").param("id",id.toString())
+                .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
     }
 
 }

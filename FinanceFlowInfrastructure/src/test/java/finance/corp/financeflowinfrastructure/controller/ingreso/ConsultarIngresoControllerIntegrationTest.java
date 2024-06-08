@@ -48,11 +48,8 @@ public class ConsultarIngresoControllerIntegrationTest {
     public void ConsultarIngreso_Success() throws Exception {
         UUID id = UUID.randomUUID();
         IngresoDTO ingresoDTO = new IngresoDTO();
-
         List<IngresoDTO> ingresoDTOList = Collections.singletonList(ingresoDTO);
-
         when(facade.execute(Optional.of(ingresoDTO))).thenReturn(ingresoDTOList);
-
         mockMvc.perform(get("/finance-flow/v1/ingreso")
                         .param("id", id.toString())
                         .contentType(MediaType.APPLICATION_JSON))

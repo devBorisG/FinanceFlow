@@ -65,7 +65,6 @@ public class CrearEgresoControllerIntegrationTest {
         categoriaDTO.setDescripcion("nueva descripcion de categoria");
         categoriaDTO.setNombre("nueva nombre de categoria");
 
-        // Crea un objeto MetaDTO con la ID válida del usuario
         EgresoDTO egresoDTO = new EgresoDTO();
         egresoDTO.setId(id);
         egresoDTO.setNombre("prueba");

@@ -68,10 +68,8 @@ public class EditarCategoriaControllerIntegrationTest {
         System.out.println(objectMapper.writeValueAsString(categoriaDTO));
         Map<String, Object> respuests = new HashMap<>();
         System.out.println(objectMapper.writeValueAsString(respuests));
-        mockMvc.perform(put("/finance-flow/v1/categoria")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(categoriaDTO)))
-                .andExpect(status().isOk())
+        mockMvc.perform(put("/finance-flow/v1/categoria").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(categoriaDTO))).andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(respuests)));
     }
 

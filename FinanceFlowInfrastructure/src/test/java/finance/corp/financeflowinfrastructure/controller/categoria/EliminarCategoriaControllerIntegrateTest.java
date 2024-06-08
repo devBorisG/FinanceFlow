@@ -43,10 +43,7 @@ public class EliminarCategoriaControllerIntegrateTest {
 
     @Test
     public void eliminarCategoriaTest_Success() throws Exception {
-        // Arrange
         UUID id = UUID.randomUUID();
-
-        // Act & Assert
         mockMvc.perform(delete("/finance-flow/v1/categoria")
                         .param("id", id.toString())
                         .contentType(MediaType.APPLICATION_JSON))

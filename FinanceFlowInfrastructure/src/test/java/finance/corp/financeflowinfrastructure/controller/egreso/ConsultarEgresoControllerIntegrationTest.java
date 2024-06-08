@@ -50,11 +50,8 @@ public class ConsultarEgresoControllerIntegrationTest {
         public void ConsultarEgreso_Success() throws Exception {
             UUID id = UUID.randomUUID();
             EgresoDTO egresoDTO = new EgresoDTO();
-
             List<EgresoDTO> egresoDTOList = Collections.singletonList(egresoDTO);
-
             when(facade.execute(Optional.of(egresoDTO))).thenReturn(egresoDTOList);
-
             mockMvc.perform(get("/finance-flow/v1/egreso")
                             .param("id", id.toString())
                             .contentType(MediaType.APPLICATION_JSON))

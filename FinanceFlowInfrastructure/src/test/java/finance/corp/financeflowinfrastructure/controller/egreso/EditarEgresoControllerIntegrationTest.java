@@ -103,7 +103,6 @@ public class EditarEgresoControllerIntegrationTest {
         categoriaDTO.setDescripcion("nueva descripcion de categoria");
         categoriaDTO.setNombre("nueva nombre de categoria");
 
-        // Crea un objeto MetaDTO con la ID válida del usuario
         EgresoDTO egresoDTO = new EgresoDTO();
         egresoDTO.setId(id);
         egresoDTO.setNombre("prueba");
@@ -113,10 +112,8 @@ public class EditarEgresoControllerIntegrationTest {
         egresoDTO.setPeriodicidad(12);
         egresoDTO.setCategoria(categoriaDTO);
 
-
         doThrow(new FinanceFlowCustomException(null, "Technical message", "Nombre de categoria ya existe", LayerException.CONTROLLER))
                 .when(facade).execute(egresoDTO);
-
         mockMvc.perform(put("/finance-flow/v1/egreso")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(egresoJson))

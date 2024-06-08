@@ -40,9 +40,7 @@ public class EliminarEgresoControllerIntegrationTest {
 
         @Test
         public void eliminarEgresoTest_Success() throws Exception {
-            //
             UUID id = UUID.randomUUID();
-
             mockMvc.perform(delete("/finance-flow/v1/egreso")
                             .param("id", id.toString())
                             .contentType(MediaType.APPLICATION_JSON))
