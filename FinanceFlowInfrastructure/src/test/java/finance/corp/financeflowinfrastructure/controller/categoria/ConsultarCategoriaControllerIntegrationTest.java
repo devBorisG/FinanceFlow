@@ -50,11 +50,8 @@ public class ConsultarCategoriaControllerIntegrationTest {
     public void testExecute_Success() throws Exception {
         UUID id = UUID.randomUUID();
         CategoriaDTO categoriaDTO = new CategoriaDTO();
-
         List<CategoriaDTO> categoriaDTOList = Collections.singletonList(categoriaDTO);
-
         when(consultarCategoriaFacade.execute(Optional.of(categoriaDTO))).thenReturn(categoriaDTOList);
-
         mockMvc.perform(get("/finance-flow/v1/categoria")
                         .param("id", id.toString())
                         .contentType(MediaType.APPLICATION_JSON))
