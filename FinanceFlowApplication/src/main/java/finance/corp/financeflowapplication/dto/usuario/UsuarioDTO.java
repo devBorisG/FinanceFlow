@@ -87,9 +87,11 @@ public class UsuarioDTO {
      * Setter for id.
      *
      * @param id the UUID of the user
+     * @return
      */
-    public void setId(final UUID id) {
+    public Object setId(final UUID id) {
         this.id = getDefaultUUID(id);
+        return null;
     }
 
     /**

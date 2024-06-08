@@ -1,10 +1,13 @@
-package finance.corp.financeflowinfrastructure.controller.categoria;
+package finance.corp.financeflowinfrastructure.controller.usuario;
 
-import finance.corp.financeflowapplication.dto.categoria.CategoriaDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import finance.corp.financeflowapplication.dto.meta.MetaDTO;
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
-import finance.corp.financeflowapplication.service.categoria.CrearCategoriaFacade;
+import finance.corp.financeflowapplication.service.meta.CrearMetaFacade;
+import finance.corp.financeflowapplication.service.usuario.CrearUsuarioFacade;
 import finance.corp.financeflowinfrastructure.init.FinanceFlowInfrastructureApplication;
 import finance.corp.financeflowutils.exception.FinanceFlowCustomException;
+import finance.corp.financeflowutils.exception.enumeration.LayerException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,25 +20,22 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import static org.mockito.Mockito.doThrow;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import finance.corp.financeflowutils.exception.enumeration.LayerException;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import static org.mockito.Mockito.doThrow;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = FinanceFlowInfrastructureApplication.class)
 @AutoConfigureMockMvc
-public class CrearCategoriaControllerIntegrationTest {
+public class CrearUsuarioControllerIntegratioTest {
 
     @MockBean
-    private CrearCategoriaFacade facade;
+    private CrearUsuarioFacade facade;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -43,17 +43,15 @@ public class CrearCategoriaControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
-
+    ObjectMapper objectMapper;
     @BeforeEach
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        objectMapper = new ObjectMapper();
     }
-
     @Test
-    void CrearCategoriaTest_Success() throws Exception {
+    void CrearUsuarioTest_Success() throws Exception {
         UUID id = UUID.randomUUID();
-
         UsuarioDTO usuario = new UsuarioDTO();
         usuario.setId(id);
         usuario.setNombre("prueba");
@@ -61,26 +59,19 @@ public class CrearCategoriaControllerIntegrationTest {
         usuario.setContrasena("prueba");
         usuario.setCorreo("prueba@prueba.com");
 
-        CategoriaDTO categoriaDTO = new CategoriaDTO();
-        categoriaDTO.setId(id);
-        categoriaDTO.setUsuarioDTO(usuario);
-        categoriaDTO.setNombre("Nueva");
-        categoriaDTO.setDescripcion("Descripción de la nueva categoría");
-
-        System.out.println(objectMapper.writeValueAsString(categoriaDTO));
+        System.out.println(objectMapper.writeValueAsString(usuario));
         Map<String, Object> respuests = new HashMap<>();
         System.out.println(objectMapper.writeValueAsString(respuests));
-        mockMvc.perform(post("/finance-flow/v1/categoria")
+        mockMvc.perform(post("/finance-flow/v1/usuario")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(categoriaDTO)))
+                        .content(objectMapper.writeValueAsString(usuario)))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(respuests)));
     }
-
     @Test
-    void CrearCategoriaTest_BadRequest() throws Exception {
+    void CrearusuarioTest_BadRequest() throws Exception {
         UUID id = UUID.randomUUID();
-        String categoriaJson = "{ \"nombre\": \"Nueva Categoria\", \"descripcion\": \"Descripción de la categoría\", \"usuario\": { \"id\": id, \"nombre\": \"Nombre del usuario\", \"email\": \"email@example.com\" } }";
+        String usuarioJson = "{  \"id\": id, \"nombre\": \"Nombre del usuario\", \"email\": \"email@example.com\" }";
         UsuarioDTO usuario = new UsuarioDTO();
         usuario.setId(id);
         usuario.setNombre("prueba");
@@ -88,22 +79,14 @@ public class CrearCategoriaControllerIntegrationTest {
         usuario.setContrasena("prueba");
         usuario.setCorreo("prueba@prueba.com");
 
-        CategoriaDTO categoriaDTO = new CategoriaDTO();
-        categoriaDTO.setId(id);
-        categoriaDTO.setUsuarioDTO(usuario);
-        categoriaDTO.setNombre("Nueva");
-        categoriaDTO.setNombre("Nueva");
-        categoriaDTO.setDescripcion("Descripción de la nueva categoría");
+       ;
 
         doThrow(new FinanceFlowCustomException(null, "Technical message", "Nombre de categoria ya existe", LayerException.CONTROLLER))
-                .when(facade).execute(categoriaDTO);
+                .when(facade).execute(usuario);
 
-        mockMvc.perform(post("/finance-flow/v1/categoria")
+        mockMvc.perform(post("/finance-flow/v1/usuario")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(categoriaJson))
+                        .content(usuarioJson))
                 .andExpect(status().isBadRequest());
     }
-
-
-
 }
