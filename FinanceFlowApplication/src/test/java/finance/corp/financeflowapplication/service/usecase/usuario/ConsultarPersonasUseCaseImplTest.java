@@ -1,12 +1,9 @@
 package finance.corp.financeflowapplication.service.usecase.usuario;
 
-import finance.corp.financeflowapplication.service.usecase.usuario.ConsultarUsuarioUseCaseImpl;
 import finance.corp.financeflowdomain.domain.UsuarioDomain;
 import finance.corp.financeflowdomain.entity.UsuarioEntity;
 import finance.corp.financeflowdomain.repository.usuario.UsuarioRepository;
 import finance.corp.financeflowutils.exception.domain.DomainCustomException;
-import finance.corp.financeflowutils.mapper.MapperDomainToEntity;
-import finance.corp.financeflowutils.mapper.MapperEntityToDomain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,18 +17,18 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class ConsultarUsuarioUseCaseImplTest {
+public class ConsultarPersonasUseCaseImplTest {
 
     @Mock
     private UsuarioRepository usuarioRepository;
 
     @InjectMocks
-    private ConsultarUsuarioUseCaseImpl consultarUsuarioUseCase;
+    private ConsultarPersonasUseCaseImpl consultarUsuarioUseCase;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        consultarUsuarioUseCase = new ConsultarUsuarioUseCaseImpl(usuarioRepository);
+        consultarUsuarioUseCase = new ConsultarPersonasUseCaseImpl(usuarioRepository);
     }
 
     @Test
