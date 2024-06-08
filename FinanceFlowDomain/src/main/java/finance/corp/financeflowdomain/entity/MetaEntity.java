@@ -3,6 +3,7 @@ package finance.corp.financeflowdomain.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -14,8 +15,8 @@ public class MetaEntity {
     UUID id;
     String nombre;
     String descripcion;
-    Date fechaInicio;
-    Date fechaFin;
+    LocalDateTime fechaInicio;
+    LocalDateTime fechaFin;
     double monto;
     @ManyToOne
     @JoinColumn(name = "usuario_id")
