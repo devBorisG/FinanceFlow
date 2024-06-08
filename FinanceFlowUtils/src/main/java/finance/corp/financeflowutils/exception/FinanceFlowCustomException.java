@@ -12,8 +12,8 @@ public class FinanceFlowCustomException extends RuntimeException{
     private final String userMessage;
     private final LayerException layerException;
 
-    protected FinanceFlowCustomException(final Throwable rootException, final String technicalMessage, final String userMessage,
-                                         final LayerException layerException){
+    public FinanceFlowCustomException(final Throwable rootException, final String technicalMessage, final String userMessage,
+                                      final LayerException layerException){
         super(technicalMessage, getDefaultIfNull(rootException,new Exception()));
         this.userMessage = userMessage;
         this.layerException = layerException;

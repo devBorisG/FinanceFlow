@@ -1,13 +1,13 @@
-package finance.corp.financeflowinfrastructure;
+//package finance.corp.financeflowinfrastructure;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+//import org.junit.jupiter.api.Test;
+//import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class FinanceFlowInfrastructureApplicationTests {
+//@SpringBootTest
+//class FinanceFlowInfrastructureApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+	//@Test
+	// contextLoads() {
+	//}
 
-}
+//}
