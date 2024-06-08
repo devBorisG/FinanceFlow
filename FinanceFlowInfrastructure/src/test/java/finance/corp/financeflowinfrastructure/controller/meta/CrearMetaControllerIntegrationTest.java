@@ -1,10 +1,8 @@
 package finance.corp.financeflowinfrastructure.controller.meta;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import finance.corp.financeflowapplication.dto.categoria.CategoriaDTO;
 import finance.corp.financeflowapplication.dto.meta.MetaDTO;
 import finance.corp.financeflowapplication.dto.usuario.UsuarioDTO;
-import finance.corp.financeflowapplication.service.categoria.CrearCategoriaFacade;
 import finance.corp.financeflowapplication.service.meta.CrearMetaFacade;
 import finance.corp.financeflowinfrastructure.init.FinanceFlowInfrastructureApplication;
 import finance.corp.financeflowutils.exception.FinanceFlowCustomException;
@@ -23,18 +21,18 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = FinanceFlowInfrastructureApplication.class)
 @AutoConfigureMockMvc
 public class CrearMetaControllerIntegrationTest {
-    static final UUID id = UUID.randomUUID();
     @MockBean
     private CrearMetaFacade facade;
 
@@ -44,21 +42,41 @@ public class CrearMetaControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private ObjectMapper objectMapper;
+    ObjectMapper objectMapper;
 
     @BeforeEach
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        objectMapper = new ObjectMapper();
     }
     @Test
     void CrearMetaTest_Success() throws Exception {
         UUID id = UUID.randomUUID();
-        String metaJson = "{ \"nombre\": \"Nueva Categoria\", \"descripcion\": \"Descripción de la categoría\", \"fechaInicio\": \"2024-06-07T12:00:00\", \"fechaFin\": \"2024-06-30T12:00:00\", \"monto\": 1000.0, \"usuario\": { \"id\": \"" + id.toString() + "\", \"nombre\": \"Nombre del usuario\", \"email\": \"email@example.com\" } }";
+        UsuarioDTO usuario = new UsuarioDTO();
+        usuario.setId(id);
+        usuario.setNombre("prueba");
+        usuario.setApellido("prueba");
+        usuario.setContrasena("prueba");
+        usuario.setCorreo("prueba@prueba.com");
 
+        // Crea un objeto MetaDTO con la ID válida del usuario
+        MetaDTO metaDTO = new MetaDTO();
+        metaDTO.setId(id); // Usa la misma ID para la categoría
+        metaDTO.setNombre("Nueva Categoria");
+        metaDTO.setDescripcion("Nueva Categoria");
+        metaDTO.setUsuario(usuario);
+
+
+        System.out.println(objectMapper.writeValueAsString(metaDTO));
+        Map<String, Object> respuests = new HashMap<>();
+        respuests.put("data", LocalDateTime.now().toString());
+        System.out.println(objectMapper.writeValueAsString(respuests));
         mockMvc.perform(post("/finance-flow/v1/meta")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(metaJson))
-                .andExpect(status().isOk());
+                        .content(objectMapper.writeValueAsString(metaDTO)))
+                .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.data").value(LocalDateTime.now().toString()))
+                .andExpect(content().json(objectMapper.writeValueAsString(respuests)));;
     }
     @Test
     void CrearMetaTest_BadRequest() throws Exception {
